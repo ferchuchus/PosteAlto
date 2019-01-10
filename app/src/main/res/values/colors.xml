@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#008577</color>
+    <color name="colorPrimaryDark">#00574B</color>
+    <color name="colorAccent">#D81B60</color>
+    <color name="black_overlay">#66000000</color>
+    <color name="fondo_celeste">#9ACCf4</color>
+    <color name="fondo_gris_boton">#d7ddde</color>
+    <color name="fondo_toolbar_y_letras_botones">#03a9f4</color>
+    <color name="letras_y_titulos">#dd4e00</color>
+    <color name="blanco">#ffffff</color>
+</resources>

@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/optInicio"
+            android:icon="@mipmap/icon_home"
+            android:title="INICIO"></item>
+        <item
+            android:id="@+id/optNoticias"
+            android:icon="@mipmap/icon_news"
+            android:title="NOTICIAS"></item>
+        <item
+            android:id="@+id/optGym"
+            android:icon="@mipmap/icon_marca"
+            android:title="GIMNASIOS" />
+        <item
+            android:id="@+id/optAuspiciantes"
+            android:title="AUSPICIANTES"></item>
+        <item
+            android:id="@+id/optContacto"
+            android:icon="@mipmap/icon_contact"
+            android:title="CONTACTO"></item>
+    </group>
+    <item
+        android:id="@+id/opCat"
+        android:title="CATEGORIAS">
+        <menu>
+            <item
+                android:id="@+id/opCatA"
+                android:icon="@mipmap/icon_ball"
+                android:title="A"></item>
+            <item
+                android:id="@+id/opCatB"
+                android:icon="@mipmap/icon_ball"
+                android:title="B"></item>
+            <item
+                android:id="@+id/opCatC"
+                android:icon="@mipmap/icon_ball"
+                android:title="C"></item>
+        </menu>
+    </item>
+    <item
+        android:id="@+id/optRedesSociales"
+        android:title="REDES SOCIALES ">
+        <menu>
+            <item
+                android:id="@+id/opFace"
+                android:icon="@mipmap/icon_facebook"
+                android:title="FACEBOOK"></item>
+            <item
+                android:id="@+id/opTw"
+                android:icon="@mipmap/icon_twitter"
+                android:title="TWITTER"></item>
+            <item
+                android:id="@+id/opIns"
+                android:icon="@mipmap/icon_instagram"
+                android:title="INSTAGRAM"></item>
+        </menu>
+    </item>
+</menu>
