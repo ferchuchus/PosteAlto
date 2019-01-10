@@ -1,12 +1,10 @@
 package ar2018.TPFinal.posteAlto;
 
-import android.app.ActionBar;
 import android.content.Intent;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.content.ContextCompat;
-import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -16,7 +14,6 @@ import android.text.style.ForegroundColorSpan;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ImageView;
 
 public class MenuActivity extends AppCompatActivity implements FragmentManager.OnBackStackChangedListener {
     private DrawerLayout drawerLayout;
@@ -36,7 +33,7 @@ public class MenuActivity extends AppCompatActivity implements FragmentManager.O
         navView.setItemIconTintList(null);
         modificarAspecto();
         shouldDisplayHomeUp();
-        
+
 
         btnCatA.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -113,7 +110,7 @@ public class MenuActivity extends AppCompatActivity implements FragmentManager.O
 
     public void shouldDisplayHomeUp() {
         getSupportActionBar().setDisplayHomeAsUpEnabled(false);
-       // getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_menu);
+        // getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_menu);
     }
 
     @Override
@@ -126,17 +123,17 @@ public class MenuActivity extends AppCompatActivity implements FragmentManager.O
         return super.onOptionsItemSelected(item);
     }
 
-    private void modificarAspecto(){
+    private void modificarAspecto() {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        MenuItem tools1 =  navView.getMenu().findItem(R.id.opCat);
+        MenuItem tools1 = navView.getMenu().findItem(R.id.opCat);
         SpannableString spanString1 = new SpannableString(tools1.getTitle());
         spanString1.setSpan(new ForegroundColorSpan(ContextCompat.getColor(this,
-                R.color.letras_y_titulos)), 0,  spanString1.length(), 0);
+                R.color.letras_y_titulos)), 0, spanString1.length(), 0);
         tools1.setTitle(spanString1);
 
-        MenuItem tools2 =  navView.getMenu().findItem(R.id.optRedesSociales);
+        MenuItem tools2 = navView.getMenu().findItem(R.id.optRedesSociales);
         SpannableString spanString2 = new SpannableString(tools2.getTitle());
         spanString2.setSpan(new ForegroundColorSpan(ContextCompat.getColor(this,
                 R.color.letras_y_titulos)), 0, spanString2.length(), 0);
