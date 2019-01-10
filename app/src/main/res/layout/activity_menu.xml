@@ -37,7 +37,7 @@
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="25dp"
                 android:layout_marginBottom="15dp"
-                android:src="@mipmap/noticia1"/>
+                android:src="@mipmap/noticia1" />
 
             <Button
                 android:id="@+id/btnCatA"
@@ -114,10 +114,10 @@
         android:scrollbarAlwaysDrawHorizontalTrack="true"
         android:touchscreenBlocksFocus="false"
         app:headerLayout="@layout/menu_encabezado"
-        app:itemTextColor="@color/letras_y_titulos"
-        app:menu="@menu/menu_opciones"
+        app:itemIconTint="@color/letras_y_titulos"
         app:itemTextAppearance="@color/letras_y_titulos"
-        app:itemIconTint="@color/letras_y_titulos">
+        app:itemTextColor="@color/letras_y_titulos"
+        app:menu="@menu/menu_opciones">
 
     </android.support.design.widget.NavigationView>
 
