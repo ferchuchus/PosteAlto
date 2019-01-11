@@ -19,14 +19,9 @@
         <ImageView
             android:id="@+id/imgLogoPoste"
             android:layout_width="280dp"
-            android:layout_height="86dp"
+            android:layout_height="85dp"
             android:foregroundGravity="center_vertical"
             android:src="@mipmap/poste_alto_logo" />
 
-      <!--  <ImageView
-            android:id="@+id/imgMenu"
-            android:layout_width="47dp"
-            android:layout_height="41dp"
-            android:src="@mipmap/menu" /> -->
     </LinearLayout>
 </android.support.v7.widget.Toolbar>
