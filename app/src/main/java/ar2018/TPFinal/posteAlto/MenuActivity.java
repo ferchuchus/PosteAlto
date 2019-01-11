@@ -26,7 +26,7 @@ public class MenuActivity extends AppCompatActivity implements FragmentManager.O
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu);
         getSupportFragmentManager().addOnBackStackChangedListener(this);
-        btnCatA = (Button) findViewById(R.id.btnCatA);
+        //btnCatA = (Button) findViewById(R.id.btnCatA);
 
         drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         navView = (NavigationView) findViewById(R.id.navview);
@@ -35,7 +35,7 @@ public class MenuActivity extends AppCompatActivity implements FragmentManager.O
         shouldDisplayHomeUp();
 
 
-        btnCatA.setOnClickListener(new View.OnClickListener() {
+     /*   btnCatA.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 String tag = "categoriaA";
@@ -47,10 +47,11 @@ public class MenuActivity extends AppCompatActivity implements FragmentManager.O
                         .beginTransaction()
                         .replace(R.id.contenido, fragment, tag)
                         .addToBackStack(null)
+                        .show(fragment)
                         .commit();
             }
         });
-
+*/
         navView.setNavigationItemSelectedListener(
                 new NavigationView.OnNavigationItemSelectedListener() {
                     @Override
@@ -89,11 +90,12 @@ public class MenuActivity extends AppCompatActivity implements FragmentManager.O
                                     .beginTransaction()
                                     .replace(R.id.contenido, fragment, tag)
                                     .addToBackStack(null)
+                                    .show(fragment)
                                     .commit();
 
                             menuItem.setChecked(true);
 
-                            getSupportActionBar().setTitle(menuItem.getTitle());
+//                            getSupportActionBar().setTitle(menuItem.getTitle());
                         }
                         drawerLayout.closeDrawers();
                         return true;
@@ -109,7 +111,7 @@ public class MenuActivity extends AppCompatActivity implements FragmentManager.O
     }
 
     public void shouldDisplayHomeUp() {
-        getSupportActionBar().setDisplayHomeAsUpEnabled(false);
+//        getSupportActionBar().setDisplayHomeAsUpEnabled(false);
         // getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_menu);
     }
 

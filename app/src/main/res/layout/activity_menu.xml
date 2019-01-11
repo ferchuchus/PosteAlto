@@ -8,23 +8,28 @@
     android:fitsSystemWindows="true"
     tools:context=".MenuActivity">
 
-    <!-- Layout real de la actividad -->
+    <FrameLayout
+        android:id="@+id/contenido"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"></FrameLayout>
+
+    <!-- Layout real de la actividad -
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
-        android:id="@+id/contenido"
+        android:id="@+id/menuPpal"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/fondo_celeste"
         android:orientation="vertical"
         tools:context=".MenuActivity">
 
-        <!-- Toolbar personalizada -->
+        <!- Toolbar personalizada -
         <include
             android:id="@+id/toolbar"
             layout="@layout/toolbar" />
 
-        <!-- Actividad -->
+        <!- Actividad -
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="480dp"
@@ -101,7 +106,7 @@
                 android:textSize="10sp" />
         </LinearLayout>
 
-    </LinearLayout>
+    </LinearLayout> -->
 
     <!-- Layout del menú lateral (Navigation View) -->
     <android.support.design.widget.NavigationView
