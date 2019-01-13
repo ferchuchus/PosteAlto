@@ -1,5 +1,8 @@
 package ar2018.TPFinal.posteAlto;
 
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.os.Build;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -31,6 +34,7 @@ public class PrincipalActivity extends AppCompatActivity implements FragmentMana
         navView.setItemIconTintList(null);
         modificarAspecto();
         contenidoPpalMenu();
+        createNotificationChannel();
 
 
         navView.setNavigationItemSelectedListener(
@@ -188,5 +192,16 @@ public class PrincipalActivity extends AppCompatActivity implements FragmentMana
                 .beginTransaction()
                 .replace(R.id.contenido, fragment)
                 .commit();
+    }
+    private void createNotificationChannel(){
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
+            CharSequence name= getString(R.string.channel_name);
+            String description = getString(R.string.channel_description);
+            int importance= NotificationManager.IMPORTANCE_DEFAULT;
+            NotificationChannel channel= new NotificationChannel("CANAL01", name,importance);
+            channel.setDescription(description);
+            NotificationManager notificationManager=getSystemService(NotificationManager.class);
+            notificationManager.createNotificationChannel(channel);
+        }
     }
 }
