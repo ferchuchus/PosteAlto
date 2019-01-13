@@ -83,7 +83,7 @@ public class PrincipalActivity extends AppCompatActivity implements FragmentMana
                                 }
                                 fragmentTransaction = true;
                                 break;
-                                 /*   case R.id.optGym:
+                                    case R.id.optGym:
                                         tag = "gimnasios";
                                         fragment = getSupportFragmentManager().findFragmentByTag(tag);
                                         if (fragment == null) {
@@ -91,10 +91,10 @@ public class PrincipalActivity extends AppCompatActivity implements FragmentMana
                                             Bundle bundle = new Bundle();
                                             bundle.putInt("mapas", 1);
                                             fragment.setArguments(bundle);
-                                            ((MapaFragment) fragment).setListener(PrincipalActivity.this);
+                                            //((MapaFragment) fragment).setListener(PrincipalActivity.this);
                                         }
                                         fragmentTransaction = true;
-                                        break;*/
+                                        break;
                         }
                         if (fragmentTransaction) {
                             getSupportFragmentManager()

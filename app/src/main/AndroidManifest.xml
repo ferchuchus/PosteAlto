@@ -28,6 +28,12 @@
         <meta-data
             android:name="com.google.android.actions"
             android:resource="@drawable/bordes_botones" />
+        <meta-data
+            android:name="com.google.android.gms.version"
+            android:value="@integer/google_play_services_version"/>
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="@string/mi_clave_mapas"/>
     </application>
 
 </manifest>
