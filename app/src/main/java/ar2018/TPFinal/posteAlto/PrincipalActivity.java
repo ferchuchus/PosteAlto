@@ -122,7 +122,7 @@ public class PrincipalActivity extends AppCompatActivity implements FragmentMana
         }
         getSupportFragmentManager()
                 .beginTransaction()
-                .add(R.id.contenido, fragment, tag)
+                .replace(R.id.contenido, fragment, tag)
                 .addToBackStack(null)
                 .show(fragment)
                 .commit();
