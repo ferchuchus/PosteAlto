@@ -64,23 +64,19 @@ public class MapaFragment extends SupportMapFragment implements OnMapReadyCallba
     }
 
     private void obtenerTodosLosEquipos() {
-       Log.d("ENTRADA", "SI");
         EquipoDao equipoDao = RestClient.getInstance().getRetrofit().create(EquipoDao.class);
         Call<List<Equipo>> callEquipos= equipoDao.listarEquipos();
-        Log.d("HAY", "EQUIPOS: " + callEquipos);
         callEquipos.enqueue(new Callback<List<Equipo>>() {
             @Override
             public void onResponse(Call<List<Equipo>> call, Response<List<Equipo>> response) {
-                Log.d("onResponse", "Entro");
                 switch (response.code()) {
                     case 200:
                 ArrayList<LatLng> latLangList= new ArrayList<>();
                 LatLngBounds.Builder builder= new LatLngBounds.Builder();
                 equipos= response.body();
-                        Log.d("onResponse", "Tiene: "+equipos);
                 for(Equipo e:equipos){
-                    LatLng latLng= new LatLng(Long.parseLong(e.getLatitud()),Long.parseLong(e.getLongitud()));
-                    mapa.addMarker(new MarkerOptions().position(latLng));
+                    LatLng latLng= new LatLng(Double.parseDouble(e.getLatitud()), Double.parseDouble(e.getLongitud()));
+                    mapa.addMarker(new MarkerOptions().position(latLng).title(e.getNombre()).snippet(e.getDireccion()));
                     latLangList.add(latLng);
                     builder.include(latLng);
                 }

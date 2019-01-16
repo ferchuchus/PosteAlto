@@ -7,7 +7,7 @@ public class Noticia {
     private String bajada;
     private String autor;
     private String fuente;
-    private String fecha;
+    private String fechaDePublicacion;
     private Imagen imagen;
     private String cuerpo;
 
@@ -31,8 +31,8 @@ public class Noticia {
         return fuente;
     }
 
-    public String getFecha() {
-        return fecha;
+    public String getFechaDePublicacion() {
+        return fechaDePublicacion;
     }
 
     public Imagen getImagen() {
@@ -63,8 +63,8 @@ public class Noticia {
         this.fuente = fuente;
     }
 
-    public void setFecha(String fecha) {
-        this.fecha = fecha;
+    public void setFechaDePublicacion(String fechaDePublicacion) {
+        this.fechaDePublicacion = fechaDePublicacion;
     }
 
     public void setImagen(Imagen imagen) {
