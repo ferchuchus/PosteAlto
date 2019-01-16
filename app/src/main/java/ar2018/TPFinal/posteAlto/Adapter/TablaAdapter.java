@@ -1,4 +1,4 @@
-package ar2018.TPFinal.posteAlto;
+package ar2018.TPFinal.posteAlto.Adapter;
 
 import android.content.Context;
 import android.graphics.Color;
@@ -11,7 +11,9 @@ import android.widget.ArrayAdapter;
 
 import java.util.List;
 
+import ar2018.TPFinal.posteAlto.Holder.TablaHolder;
 import ar2018.TPFinal.posteAlto.Modelo.FilaTabla;
+import ar2018.TPFinal.posteAlto.R;
 
 public class TablaAdapter extends ArrayAdapter<FilaTabla> {
     private Context contexto;

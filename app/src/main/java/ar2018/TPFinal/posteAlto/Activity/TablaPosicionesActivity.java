@@ -1,8 +1,5 @@
-package ar2018.TPFinal.posteAlto;
+package ar2018.TPFinal.posteAlto.Activity;
 
-import android.annotation.TargetApi;
-import android.os.Build;
-import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -10,12 +7,13 @@ import android.widget.ListView;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 
 import ar2018.TPFinal.posteAlto.Modelo.Equipo;
 import ar2018.TPFinal.posteAlto.Modelo.FilaTabla;
 import ar2018.TPFinal.posteAlto.Modelo.Imagen;
+import ar2018.TPFinal.posteAlto.R;
+import ar2018.TPFinal.posteAlto.Adapter.TablaAdapter;
 
 public class TablaPosicionesActivity extends AppCompatActivity {
     ListView lvTablaPosiciones;

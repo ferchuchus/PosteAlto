@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MenuFragment">
+    tools:context=".Fragment.MenuFragment">
 
     <!-- Toolbar personalizada -->
 
@@ -15,7 +15,7 @@
         android:layout_height="match_parent"
         android:background="@color/fondo_celeste"
         android:orientation="vertical"
-        tools:context=".PrincipalActivity">
+        tools:context=".Activity.PrincipalActivity">
 
        <!-- Contenido -->
         <include

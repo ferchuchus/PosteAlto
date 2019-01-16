@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="@color/fondo_celeste"
     android:fitsSystemWindows="true"
-    tools:context=".PrincipalActivity">
+    tools:context=".Activity.PrincipalActivity">
 
     <FrameLayout
         android:id="@+id/contenido"

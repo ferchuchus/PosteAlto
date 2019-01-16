@@ -1,4 +1,4 @@
-package ar2018.TPFinal.posteAlto;
+package ar2018.TPFinal.posteAlto.Fragment;
 
 
 import android.os.Bundle;

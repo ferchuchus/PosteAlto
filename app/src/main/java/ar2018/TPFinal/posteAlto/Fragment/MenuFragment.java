@@ -1,4 +1,4 @@
-package ar2018.TPFinal.posteAlto;
+package ar2018.TPFinal.posteAlto.Fragment;
 
 
 import android.content.Context;
@@ -9,6 +9,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+
+import ar2018.TPFinal.posteAlto.R;
 
 
 /**

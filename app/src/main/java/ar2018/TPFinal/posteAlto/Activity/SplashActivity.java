@@ -1,9 +1,11 @@
-package ar2018.TPFinal.posteAlto;
+package ar2018.TPFinal.posteAlto.Activity;
 
 import android.content.Intent;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+
+import ar2018.TPFinal.posteAlto.R;
 
 
 public class SplashActivity extends AppCompatActivity {

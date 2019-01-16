@@ -1,4 +1,4 @@
-package ar2018.TPFinal.posteAlto;
+package ar2018.TPFinal.posteAlto.Activity;
 
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
@@ -16,6 +16,11 @@ import android.text.SpannableString;
 import android.text.style.ForegroundColorSpan;
 import android.util.Log;
 import android.view.MenuItem;
+
+import ar2018.TPFinal.posteAlto.Fragment.MapaFragment;
+import ar2018.TPFinal.posteAlto.Fragment.MenuFragment;
+import ar2018.TPFinal.posteAlto.Fragment.VerCategoriaFragment;
+import ar2018.TPFinal.posteAlto.R;
 
 public class PrincipalActivity extends AppCompatActivity implements FragmentManager.OnBackStackChangedListener,
         MenuFragment.OnVerCategoriaListener {

@@ -1,8 +1,10 @@
-package ar2018.TPFinal.posteAlto;
+package ar2018.TPFinal.posteAlto.Holder;
 
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import ar2018.TPFinal.posteAlto.R;
 
 public class TablaHolder {
     public ImageView ivImagen;
