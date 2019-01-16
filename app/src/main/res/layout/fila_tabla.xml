@@ -5,22 +5,15 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="@color/fondo_TP_Eq_Fix">
+    android:background="@color/black_overlay">
 
-    <!--TextView
-        android:id="@+id/textView3"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/fondo_TP_Eq_Fix"
-        android:text="                EQUIPO                   PG    PP      TF       TC       D"
-        android:textColor="@color/letras_y_titulos"
-        android:textStyle="bold" /-->
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="60dp"
         android:gravity="center"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:background="@color/fondo_TP_Eq_Fix">
 
         <ImageView
             android:id="@+id/imImagen"

@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
+import ar2018.TPFinal.posteAlto.Activity.SeguiEquipoActivity;
 import ar2018.TPFinal.posteAlto.Activity.TablaPosicionesActivity;
 import ar2018.TPFinal.posteAlto.R;
 
@@ -58,8 +59,8 @@ public class VerCategoriaFragment extends Fragment {
         btnSeguiTuEquipo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-              /* Intent intent = new Intent(getContext(), SeleccionEquiposActivity.class);
-                startActivity(intent);*/
+               Intent intent = new Intent(getContext(), SeguiEquipoActivity.class);
+                startActivity(intent);
             }
         });
         return v;
