@@ -6,8 +6,8 @@ public class Equipo {
     private String nombre;
     private String direccion;
     private Imagen imagen;
-    private long latitud;
-    private long lingitud;
+    private String latitud;
+    private String longitud;
 
     public int getId() {
         return id;
@@ -41,19 +41,19 @@ public class Equipo {
         this.imagen = imagen;
     }
 
-    public long getLatitud() {
+    public String getLatitud() {
         return latitud;
     }
 
-    public void setLatitud(long latitud) {
+    public void setLatitud(String latitud) {
         this.latitud = latitud;
     }
 
-    public long getLingitud() {
-        return lingitud;
+    public String getLongitud() {
+        return longitud;
     }
 
-    public void setLingitud(long lingitud) {
-        this.lingitud = lingitud;
+    public void setLongitud(String longitud) {
+        this.longitud = longitud;
     }
 }
