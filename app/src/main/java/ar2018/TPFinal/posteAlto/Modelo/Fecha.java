@@ -4,7 +4,7 @@ public class Fecha {
 
     private int id;
     private String nombre;
-    private Categoria categoria;
+    private int categoria;
 
     public int getId() {
         return id;
@@ -22,11 +22,11 @@ public class Fecha {
         this.nombre = nombre;
     }
 
-    public Categoria getCategoria() {
+    public int getCategoria() {
         return categoria;
     }
 
-    public void setCategoria(Categoria categoria) {
+    public void setCategoria(int categoria) {
         this.categoria = categoria;
     }
 }

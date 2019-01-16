@@ -1,14 +1,20 @@
 package ar2018.TPFinal.posteAlto.Modelo;
 
+import com.google.gson.annotations.SerializedName;
+
 public class Partido {
 
-    public enum Estado {Creado, Iniciado, Finalizado, Fin2doCuarto}
+    public enum Estado {Creado, Iniciado, Fin2doCuarto, Finalizado}
 
     private int id;
-    private Estado estado;
+    private int estado;
+    private String fecha;
     private Equipo local;
     private Equipo visitante;
+    @SerializedName("idResultado")
     private Resultado resultado;
+    @SerializedName("idFecha")
+    private Fecha fechaCompetencia;
 
     public int getId() {
         return id;
@@ -18,11 +24,11 @@ public class Partido {
         this.id = id;
     }
 
-    public Estado getEstado() {
+    public int getEstado() {
         return estado;
     }
 
-    public void setEstado(Estado estado) {
+    public void setEstado(int estado) {
         this.estado = estado;
     }
 
