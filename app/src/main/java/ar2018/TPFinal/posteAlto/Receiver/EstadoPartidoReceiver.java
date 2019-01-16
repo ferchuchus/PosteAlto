@@ -11,6 +11,11 @@ import android.net.Uri;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.NotificationManagerCompat;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.TimeZone;
+
 import ar2018.TPFinal.posteAlto.R;
 
 public class EstadoPartidoReceiver extends BroadcastReceiver {
@@ -20,21 +25,44 @@ public class EstadoPartidoReceiver extends BroadcastReceiver {
         PendingIntent pendingIntent=null;
         NotificationCompat.Builder notification=null;
         Uri defaultSoundUri= RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+        String mensaje= null;
+        String titulo=null;
         switch(intent.getAction()){
             case "Partido.Estado.Iniciado":
-                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                    pendingIntent= PendingIntent.getActivity(context, 0, intent, PendingIntent.FLAG_ONE_SHOT);
-
-                    notification= new NotificationCompat.Builder(context, "CANAL01")
-                            .setSmallIcon(R.drawable.ic_launcher_background)
-                            .setContentTitle("PARTIDO INCIADO")
-                            .setContentText("Equipo A vs Equipo B ha comenzado")
-                            .setSound(defaultSoundUri)
-                            .setContentIntent(pendingIntent)
-                            .setAutoCancel(true);
-                    break;
+                titulo="PARTIDO INICIADO";
+                mensaje=intent.getExtras().getString("local")+" vs "+
+                        intent.getExtras().getString("visitante")+" ha comenzado";
+                break;
+            case "Partido.Estado.Fin2doCuarto":
+                titulo="HA FINALIZADO EL 2DO CUARTO";
+                mensaje=intent.getExtras().getString("local")+" "+intent.getExtras().getInt("tantosL")+
+                        " - "+intent.getExtras().getInt("tantosV")+intent.getExtras().getString("visitante");
+                break;
+            case "Partido.Estado.Finalizado":
+                titulo="PARTIDO FINALIZADO";
+                mensaje=intent.getExtras().getString("local")+" "+intent.getExtras().getInt("tantosL")+
+                        " - "+intent.getExtras().getInt("tantosV")+intent.getExtras().getString("visitante");
+                break;
+            case "aviso partido proximo":
+                long timeStamp= Long.parseLong(intent.getExtras().getString("timeStamp"));
+                SimpleDateFormat sdf= new SimpleDateFormat("HH:mm");
+                sdf.setTimeZone(TimeZone.getTimeZone("UTC"));
+                String hora= sdf.format(new Date(timeStamp*1000));
+                titulo="AVISO DE PARTIDO";
+                mensaje=intent.getExtras().get("local")+" vs "+intent.getExtras().getString("visitante")+
+                        " comenzara a las "+hora;
 
         }
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        pendingIntent= PendingIntent.getActivity(context, 0, intent, PendingIntent.FLAG_ONE_SHOT);
+
+        notification= new NotificationCompat.Builder(context, "CANAL01")
+                .setSmallIcon(R.mipmap.icon_ball)
+                .setContentTitle(titulo)
+                .setContentText(mensaje)
+                .setSound(defaultSoundUri)
+                .setContentIntent(pendingIntent)
+                .setAutoCancel(true);
 
         NotificationManagerCompat notificationManager = NotificationManagerCompat.from(context);
         notificationManager.notify(1, notification.build());
