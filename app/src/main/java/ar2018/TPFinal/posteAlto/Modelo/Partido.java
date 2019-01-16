@@ -55,4 +55,20 @@ public class Partido {
     public void setResultado(Resultado resultado) {
         this.resultado = resultado;
     }
+
+    public String getFecha() {
+        return fecha;
+    }
+
+    public void setFecha(String fecha) {
+        this.fecha = fecha;
+    }
+
+    public Fecha getFechaCompetencia() {
+        return fechaCompetencia;
+    }
+
+    public void setFechaCompetencia(Fecha fechaCompetencia) {
+        this.fechaCompetencia = fechaCompetencia;
+    }
 }
