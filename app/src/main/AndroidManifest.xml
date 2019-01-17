@@ -52,7 +52,8 @@
             android:enabled="true"
             android:exported="true" />
 
-        <activity android:name=".Activity.SeguiEquipoActivity"></activity>
+        <activity android:name=".Activity.SeguiEquipoActivity" />
+        <activity android:name=".Activity.FixtureActivity"></activity>
     </application>
 
 </manifest>

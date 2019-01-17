@@ -32,8 +32,12 @@ public class MapaFragment extends SupportMapFragment implements OnMapReadyCallba
 
     static final int TODOS_LOS_EQUIPOS = 1;
     GoogleMap mapa;
-    int llamdoDe;
+    int llamadoDe;
     List<Equipo> equipos;
+    Double lat;
+    Double lon;
+    String direccion;
+
 
     public MapaFragment() {
     }
@@ -43,9 +47,16 @@ public class MapaFragment extends SupportMapFragment implements OnMapReadyCallba
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View rootView = super.onCreateView(inflater, container, savedInstanceState);
-        llamdoDe = 0;
+        llamadoDe = 0;
         Bundle argumentos = getArguments();
-        if (argumentos != null) llamdoDe = argumentos.getInt("mapas");
+        if (argumentos != null) {
+            llamadoDe = argumentos.getInt("mapas");
+            if (llamadoDe == 2) {
+                lat = Double.parseDouble(argumentos.getString("lat"));
+                lon = Double.parseDouble(argumentos.getString("lon"));
+                direccion = String.valueOf(argumentos.getSize("dir"));
+            }
+        }
         getMapAsync(this);
 
 
@@ -55,9 +66,12 @@ public class MapaFragment extends SupportMapFragment implements OnMapReadyCallba
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mapa = googleMap;
-        switch (llamdoDe) {
+        switch (llamadoDe) {
             case 1:
                 obtenerTodosLosEquipos();
+                break;
+            case 2:
+                mostrarGimnasio(lat, lon, direccion);
                 break;
         }
 
@@ -65,25 +79,25 @@ public class MapaFragment extends SupportMapFragment implements OnMapReadyCallba
 
     private void obtenerTodosLosEquipos() {
         EquipoDao equipoDao = RestClient.getInstance().getRetrofit().create(EquipoDao.class);
-        Call<List<Equipo>> callEquipos= equipoDao.listarEquipos();
+        Call<List<Equipo>> callEquipos = equipoDao.listarEquipos();
         callEquipos.enqueue(new Callback<List<Equipo>>() {
             @Override
             public void onResponse(Call<List<Equipo>> call, Response<List<Equipo>> response) {
                 switch (response.code()) {
                     case 200:
-                ArrayList<LatLng> latLangList= new ArrayList<>();
-                LatLngBounds.Builder builder= new LatLngBounds.Builder();
-                equipos= response.body();
-                for(Equipo e:equipos){
-                    LatLng latLng= new LatLng(Double.parseDouble(e.getLatitud()), Double.parseDouble(e.getLongitud()));
-                    mapa.addMarker(new MarkerOptions().position(latLng).title(e.getNombre()).snippet(e.getDireccion()));
-                    latLangList.add(latLng);
-                    builder.include(latLng);
-                }
-                LatLngBounds latLngBounds= builder.build();
-                CameraUpdate cu= CameraUpdateFactory.newLatLngBounds(latLngBounds, 0);
-                mapa.moveCamera(cu);
-                               break;
+                        ArrayList<LatLng> latLangList = new ArrayList<>();
+                        LatLngBounds.Builder builder = new LatLngBounds.Builder();
+                        equipos = response.body();
+                        for (Equipo e : equipos) {
+                            LatLng latLng = new LatLng(Double.parseDouble(e.getLatitud()), Double.parseDouble(e.getLongitud()));
+                            mapa.addMarker(new MarkerOptions().position(latLng).title(e.getNombre()).snippet(e.getDireccion()));
+                            latLangList.add(latLng);
+                            builder.include(latLng);
+                        }
+                        LatLngBounds latLngBounds = builder.build();
+                        CameraUpdate cu = CameraUpdateFactory.newLatLngBounds(latLngBounds, 0);
+                        mapa.moveCamera(cu);
+                        break;
                     case 400:
                         Toast.makeText(getContext(), "Bad Request",
                                 Toast.LENGTH_LONG).show();
@@ -104,5 +118,15 @@ public class MapaFragment extends SupportMapFragment implements OnMapReadyCallba
 
             }
         });
+    }
+
+    private void mostrarGimnasio(Double latitud, Double longitud, String direccion) {
+        LatLngBounds.Builder builder = new LatLngBounds.Builder();
+        LatLng latLng = new LatLng(latitud, longitud);
+        mapa.addMarker(new MarkerOptions().position(latLng).title(direccion));
+        builder.include(latLng);
+        LatLngBounds latLngBounds = builder.build();
+        CameraUpdate cu = CameraUpdateFactory.newLatLngBounds(latLngBounds, 0);
+        mapa.moveCamera(cu);
     }
 }
