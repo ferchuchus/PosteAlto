@@ -1,10 +1,11 @@
 package ar2018.TPFinal.posteAlto.Modelo;
 
+import android.graphics.Bitmap;
 import android.support.annotation.NonNull;
 
 public class FilaTabla implements Comparable<FilaTabla> {
     private String nombreEquipo;
-    private String imagenEquipo;
+    private Bitmap imagenEquipo;
     private Integer pg;
     private Integer pp;
     private Integer tf;
@@ -19,11 +20,11 @@ public class FilaTabla implements Comparable<FilaTabla> {
         this.nombreEquipo = nombreEquipo;
     }
 
-    public String getImagenEquipo() {
+    public Bitmap getImagenEquipo() {
         return imagenEquipo;
     }
 
-    public void setImagenEquipo(String imagenEquipo) {
+    public void setImagenEquipo(Bitmap imagenEquipo) {
         this.imagenEquipo = imagenEquipo;
     }
 
@@ -69,8 +70,6 @@ public class FilaTabla implements Comparable<FilaTabla> {
 
     @Override
     public int compareTo(@NonNull FilaTabla o) {
-        String a=new String(String.valueOf(this.getPg()));
-        String b=new String(String.valueOf(this.getPg()));
-        return a.compareTo(b);
+        return o.pg.compareTo(this.pg);
     }
 }
