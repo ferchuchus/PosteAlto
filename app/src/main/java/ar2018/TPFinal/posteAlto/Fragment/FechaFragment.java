@@ -51,7 +51,7 @@ public class FechaFragment extends Fragment {
         Bundle argumentos = getArguments();
         if (argumentos != null) {
             String fe = argumentos.getString("fechaNro", "");
-            txtFecha.setText("FECHA "+fe);
+            txtFecha.setText(fe.toUpperCase());
             buscarPartidosFecha();
             }
         return v;

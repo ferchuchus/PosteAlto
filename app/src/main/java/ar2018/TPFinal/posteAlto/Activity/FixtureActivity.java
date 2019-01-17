@@ -6,9 +6,11 @@ import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
+import ar2018.TPFinal.posteAlto.Fragment.FechaFragment;
 import ar2018.TPFinal.posteAlto.Fragment.FixtureFragment;
 import ar2018.TPFinal.posteAlto.Fragment.MapaFragment;
 import ar2018.TPFinal.posteAlto.Fragment.VerCategoriaFragment;
+import ar2018.TPFinal.posteAlto.Modelo.Fecha;
 import ar2018.TPFinal.posteAlto.R;
 
 public class FixtureActivity extends AppCompatActivity implements FragmentManager.OnBackStackChangedListener,
@@ -60,6 +62,22 @@ public class FixtureActivity extends AppCompatActivity implements FragmentManage
                     .show(fragment)
                     .commit();
 
+    }
+
+    @Override
+    public Fragment crearFechaFragment(Fecha fecha) {
+        String tag = fecha.getNombre();
+        Fragment fragment = getSupportFragmentManager().findFragmentByTag(tag);
+        if (fragment == null) {
+            fragment = new FechaFragment();
+            //Buscar PARTIDOS DE LA FECHA
+        }
+        Bundle bundle = new Bundle();
+        bundle.putString("fechaNro",tag);
+        fragment.setArguments(bundle);
+         getSupportFragmentManager()
+                .beginTransaction();// --->  fragmentManager.executePendingTransactions() ??
+        return fragment;
     }
 
     @Override
