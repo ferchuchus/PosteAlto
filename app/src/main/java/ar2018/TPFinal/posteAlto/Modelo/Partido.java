@@ -15,6 +15,7 @@ public class Partido {
     private Resultado resultado;
     @SerializedName("idFecha")
     private Fecha fechaCompetencia;
+    int anio;
 
     public int getId() {
         return id;
@@ -70,5 +71,13 @@ public class Partido {
 
     public void setFechaCompetencia(Fecha fechaCompetencia) {
         this.fechaCompetencia = fechaCompetencia;
+    }
+
+    public int getAnio() {
+        return anio;
+    }
+
+    public void setAnio(int anio) {
+        this.anio = anio;
     }
 }
