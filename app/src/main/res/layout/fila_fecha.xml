@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
+    android:layout_width="320dp"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:background="@color/fondo_TP_Eq_Fix">
+    android:background="@color/fondo_TP_Eq_Fix"
+    android:orientation="vertical">
 
     <TextView
         android:id="@+id/txtFechaHora"
@@ -72,8 +72,8 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:background="@color/fondo_TP_Eq_Fix">
+        android:background="@color/fondo_TP_Eq_Fix"
+        android:orientation="horizontal">
 
         <TextView
             android:id="@+id/txtEquipo1"
