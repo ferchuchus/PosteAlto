@@ -1,7 +1,6 @@
 package ar2018.TPFinal.posteAlto.Fragment;
 
 import android.content.Context;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
@@ -15,7 +14,6 @@ import android.widget.Toast;
 import java.util.List;
 
 import ar2018.TPFinal.posteAlto.Adapter.FechaAdapter;
-import ar2018.TPFinal.posteAlto.Adapter.PasarFechasAdapter;
 import ar2018.TPFinal.posteAlto.Dao.FechaDao;
 import ar2018.TPFinal.posteAlto.Dao.PartidoDao;
 import ar2018.TPFinal.posteAlto.Modelo.Fecha;
@@ -115,7 +113,7 @@ public class FixtureFragment extends Fragment {
                             Fragment fag=mListener.crearFechaFragment(f);
                             fechas.add(fag);
                         }
-                        viewPager.setAdapter(new PasarFechasAdapter(getContext(), fechas));
+                        RECYCLERCIEW.setAdapter(new FechaAdapter(partidos)); ---> OJO PUSISTE CUALQUIER COSA
                         break;
                     case 400:
                         Toast.makeText(getContext(), "Bad Request",
