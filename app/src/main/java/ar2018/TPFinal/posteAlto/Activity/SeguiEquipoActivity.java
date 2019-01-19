@@ -1,20 +1,28 @@
 package ar2018.TPFinal.posteAlto.Activity;
 
+import android.os.Handler;
+import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.ListView;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 import ar2018.TPFinal.posteAlto.Adapter.SeguiEquipoAdapter;
 import ar2018.TPFinal.posteAlto.Adapter.TablaAdapter;
+import ar2018.TPFinal.posteAlto.Dao.EquipoDao;
 import ar2018.TPFinal.posteAlto.Modelo.Equipo;
 import ar2018.TPFinal.posteAlto.Modelo.Imagen;
 import ar2018.TPFinal.posteAlto.R;
+import ar2018.TPFinal.posteAlto.RetrofitClient.RestClient;
+import retrofit2.Call;
+import retrofit2.Response;
 
 public class SeguiEquipoActivity extends AppCompatActivity {
+    static final int EQUIPOS_CARGADOS=1;
     ListView lvSeguiEquipo;
     List<Equipo> listaEquipos= new ArrayList<Equipo>();
 
@@ -23,24 +31,37 @@ public class SeguiEquipoActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_segui_equipo);
 
-        //Buscar equipos en BD.
-
-        //BORRAR CARGO DATOS PARA PROBAR QUE LA INTERFAZ ANDA
-        Equipo uno=new Equipo();
-        uno.setNombre("Recreativo A");
-        Imagen iUno=new Imagen();
-        iUno.setImagen("R.mipmap.recreativo_a");
-        uno.setImagen(iUno);
-        Log.d("UNO","Tiene: "+uno);
-        listaEquipos.add(uno);
-        Equipo dos=new Equipo();
-        dos.setNombre("Recreativo B");
-        Imagen iDos=new Imagen();
-        iDos.setImagen("R.mipmap.recreativo_a");
-        dos.setImagen(iDos);
-        listaEquipos.add(dos);
+        buscarEquipos();
 
         lvSeguiEquipo = (ListView) findViewById(R.id.lvSegui);
-        lvSeguiEquipo.setAdapter(new SeguiEquipoAdapter(getApplicationContext(),listaEquipos));
+
     }
+
+    private void buscarEquipos(){
+        Runnable r= new Runnable() {
+            @Override
+            public void run() {
+                EquipoDao equipoDao= RestClient.getInstance().getRetrofit().create(EquipoDao.class);
+                Call<List<Equipo>> callEquipos= equipoDao.listarEquipos();
+                try {
+                    Response<List<Equipo>> response=callEquipos.execute();
+                    listaEquipos=response.body();
+                    Message mensaje= handler.obtainMessage(EQUIPOS_CARGADOS);
+                    mensaje.sendToTarget();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        };
+        Thread t= new Thread(r);
+        t.start();
+    }
+
+    Handler handler= new Handler(){
+        @Override
+        public void handleMessage(Message msg) {
+            if(msg.what==EQUIPOS_CARGADOS)
+                lvSeguiEquipo.setAdapter(new SeguiEquipoAdapter(getApplicationContext(),listaEquipos));
+        }
+    };
 }
