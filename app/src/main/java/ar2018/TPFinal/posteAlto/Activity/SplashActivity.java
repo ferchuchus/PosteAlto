@@ -40,10 +40,10 @@ public class SplashActivity extends AppCompatActivity {
             }
         }, DURACION_SPLASH);
         Bundle argumentos= getIntent().getExtras();
-        if(argumentos!=null){
+        if(argumentos!=null && Integer.parseInt(argumentos.getString("idPartido"))!=0){
             if(Boolean.parseBoolean(argumentos.getString("avisoEstado")))
-                enviarBrodcastEstado(argumentos.getInt("idPartido"));
-            else enviarBrodcastAviso(argumentos.getInt("idPartido"));
+                enviarBrodcastEstado(Integer.parseInt(argumentos.getString("idPartido")));
+            else enviarBrodcastAviso(Integer.parseInt(argumentos.getString("idPartido")));
         }
     }
 
