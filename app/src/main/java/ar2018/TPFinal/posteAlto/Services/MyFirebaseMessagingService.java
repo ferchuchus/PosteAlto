@@ -1,8 +1,10 @@
 package ar2018.TPFinal.posteAlto.Services;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Handler;
 import android.os.Message;
+import android.preference.PreferenceManager;
 
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
@@ -20,8 +22,10 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
     static final int ESTADO=1;
     static final int AVISO_PARTIDO=2;
     Partido partido;
+    SharedPreferences preferences;
     @Override
     public void onMessageReceived(RemoteMessage remoteMessage) {
+        preferences= PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         if(remoteMessage.getData()!= null){
             if(Boolean.parseBoolean(remoteMessage.getData().get("avisoEstado")))
                 enviarBrodcastEstado(Integer.parseInt(remoteMessage.getData().get("idPartido")));
@@ -74,34 +78,37 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
     Handler handler= new Handler(){
         @Override
         public void handleMessage(Message msg) {
-            Intent i= new Intent(MyFirebaseMessagingService.this, EstadoPartidoReceiver.class);
-            i.putExtra("local", partido.getLocal().getNombre());
-            i.putExtra("visitante", partido.getVisitante().getNombre());
-            switch(msg.what){
-                case ESTADO:
-                    switch (partido.getEstado()){
-                        case 1:
-                            i.setAction("Partido.Estado.Iniciado");
-                            break;
-                        case 2:
-                            i.setAction("Partido.Estado.Fin2doCuarto");
-                            i.putExtra("tantosL", partido.getResultado().getTantosL());
-                            i.putExtra("tantosV", partido.getResultado().getTantosV());
-                            break;
-                        case 3:
-                            i.setAction("Partido.Estado.Finalizado");
-                            i.putExtra("tantosL", partido.getResultado().getTantosL());
-                            i.putExtra("tantosV", partido.getResultado().getTantosV());
-                            break;
-                    }
+          if(preferences.getBoolean(partido.getLocal().getNombre(),false) ||
+                  preferences.getBoolean(partido.getVisitante().getNombre(),false)){
+              Intent i= new Intent(MyFirebaseMessagingService.this, EstadoPartidoReceiver.class);
+              i.putExtra("local", partido.getLocal().getNombre());
+              i.putExtra("visitante", partido.getVisitante().getNombre());
+              switch(msg.what){
+                  case ESTADO:
+                      switch (partido.getEstado()){
+                          case 1:
+                              i.setAction("Partido.Estado.Iniciado");
+                              break;
+                          case 2:
+                              i.setAction("Partido.Estado.Fin2doCuarto");
+                              i.putExtra("tantosL", partido.getResultado().getTantosL());
+                              i.putExtra("tantosV", partido.getResultado().getTantosV());
+                              break;
+                          case 3:
+                              i.setAction("Partido.Estado.Finalizado");
+                              i.putExtra("tantosL", partido.getResultado().getTantosL());
+                              i.putExtra("tantosV", partido.getResultado().getTantosV());
+                              break;
+                      }
 
-                    break;
-                case AVISO_PARTIDO:
-                    i.setAction("aviso partido proximo");
-                    i.putExtra("timeStamp", partido.getFecha());
-                    break;
-            }
-            sendBroadcast(i);
+                      break;
+                  case AVISO_PARTIDO:
+                      i.setAction("aviso partido proximo");
+                      i.putExtra("timeStamp", partido.getFecha());
+                      break;
+              }
+              sendBroadcast(i);
+          }
 
         }
     };
