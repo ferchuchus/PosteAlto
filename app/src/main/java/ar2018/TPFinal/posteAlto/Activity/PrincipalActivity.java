@@ -65,7 +65,7 @@ public class PrincipalActivity extends AppCompatActivity implements FragmentMana
                                 if (fragment == null) {
                                     fragment = new VerCategoriaFragment();
                                     Bundle bundle = new Bundle();
-                                    bundle.putString("MostarCategoria", "C");
+                                    bundle.putString("MostarCategoria", "A");
                                     fragment.setArguments(bundle);
                                 }
                                 fragmentTransaction = true;

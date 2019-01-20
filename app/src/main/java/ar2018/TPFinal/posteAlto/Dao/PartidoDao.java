@@ -12,6 +12,6 @@ public interface PartidoDao {
     @GET("partido/{id}")
     Call<Partido> buscarPartidoPorId(@Path("id") int idPartido);
 
-    @GET("partido/idfecha/{nombre}")
-    Call<List<Partido>> listarParidosEnFecha(@Path("nombre") String fecha);
+    @GET("partido/idfecha/{id}")
+    Call<List<Partido>> listarParidosEnFecha(@Path("id") Integer idFecha);
 }

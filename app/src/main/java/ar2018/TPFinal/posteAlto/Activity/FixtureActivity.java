@@ -3,28 +3,28 @@ package ar2018.TPFinal.posteAlto.Activity;
 import android.content.Intent;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 
-import java.util.List;
 
 import ar2018.TPFinal.posteAlto.Fragment.FixtureFragment;
 import ar2018.TPFinal.posteAlto.Fragment.MapaFragment;
-import ar2018.TPFinal.posteAlto.Modelo.Fecha;
-import ar2018.TPFinal.posteAlto.Modelo.Partido;
+
 import ar2018.TPFinal.posteAlto.R;
 
-public class FixtureActivity extends AppCompatActivity implements FragmentManager.OnBackStackChangedListener,
-        FixtureFragment.OnFixtureInteractionListener {
+public class FixtureActivity extends AppCompatActivity implements FragmentManager.OnBackStackChangedListener{
     String lat;
     String lon;
     String dir;
-    List<Partido> partidos;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_fixture);
+        shouldDisplayHomeUp();
         Intent i = getIntent();
         if(i.getExtras()!=null) {
             lat = String.valueOf(i.getExtras().get("Latitud"));
@@ -67,26 +67,16 @@ public class FixtureActivity extends AppCompatActivity implements FragmentManage
     }
 
     @Override
-    public Fragment crearFechaFragment(Fecha fecha) {
-        String tag = fecha.getNombre();
-        Fragment fragment = getSupportFragmentManager().findFragmentByTag(tag);
-        if (fragment == null) {
-            fragment = new FechaFragment();
-        }
-        Bundle bundle = new Bundle();
-        bundle.putString("fechaNro",tag);
-        fragment.setArguments(bundle);
-         getSupportFragmentManager()
-                .beginTransaction()
-                 .replace(R.id.vpFechas, fragment, tag)
-                 .addToBackStack(null)
-                 .commit();// --->  fragmentManager.executePendingTransactions() ??
-        return fragment;
+    public void onBackStackChanged() {
+        shouldDisplayHomeUp();
     }
 
-    @Override
-    public void onBackStackChanged() {
-
+    public void shouldDisplayHomeUp() {
+        boolean canback = getSupportFragmentManager().getBackStackEntryCount() > 0;
+        // getSupportActionBar().setDisplayHomeAsUpEnabled(canback);
+        ActionBar actionBar= getSupportActionBar();
+        Log.d("ACTION BAR", "ab="+actionBar);
+        if(getSupportActionBar()!=null) getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
     @Override

@@ -19,7 +19,7 @@ import retrofit2.Response;
 
 public class SplashActivity extends AppCompatActivity {
 
-    private final int DURACION_SPLASH = 3000; // 3 segundos
+    private static final int DURACION_SPLASH = 3000; // 3 segundos
     static final int ESTADO=1;
     static final int AVISO_PARTIDO=2;
     Partido partido;
