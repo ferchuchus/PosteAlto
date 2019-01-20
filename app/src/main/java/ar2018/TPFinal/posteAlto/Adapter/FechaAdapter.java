@@ -94,6 +94,7 @@ public class FechaAdapter extends RecyclerView.Adapter<FechaAdapter.FechaHolder>
                 i.putExtra("Latitud", partido.getLocal().getLatitud());
                 i.putExtra("Longitud", partido.getLocal().getLongitud());
                 i.putExtra("Direccion",partido.getLocal().getDireccion());
+                i.putExtra("NombreClub",partido.getLocal().getNombre());
                 context.getContext().startActivity(i);
             }
         });

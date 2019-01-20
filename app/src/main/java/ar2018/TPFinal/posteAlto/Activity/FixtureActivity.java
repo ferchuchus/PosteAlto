@@ -18,6 +18,7 @@ public class FixtureActivity extends AppCompatActivity implements FragmentManage
     String lat;
     String lon;
     String dir;
+    String nom;
 
 
     @Override
@@ -30,7 +31,8 @@ public class FixtureActivity extends AppCompatActivity implements FragmentManage
             lat = String.valueOf(i.getExtras().get("Latitud"));
             lon = String.valueOf( i.getExtras().get("Longitud"));
             dir = String.valueOf( i.getExtras().get("Direccion"));
-            mostrarGimnasio(lat,lon,dir);
+            nom = String.valueOf( i.getExtras().get("NombreClub"));
+            mostrarGimnasio(lat,lon,dir,nom);
         }else {
             String tag = "fixture";
             Fragment fragment = getSupportFragmentManager().findFragmentByTag(tag);
@@ -46,7 +48,7 @@ public class FixtureActivity extends AppCompatActivity implements FragmentManage
         }
     }
 
-    public void mostrarGimnasio(final String lat, final String lon, String dir) {
+    public void mostrarGimnasio(final String lat, final String lon, String dir,String nom) {
         String tag = "gimnasio";
         Fragment fragment = getSupportFragmentManager().findFragmentByTag(tag);
         if (fragment == null) {
@@ -56,6 +58,7 @@ public class FixtureActivity extends AppCompatActivity implements FragmentManage
             bundle.putString("lat",lat);
             bundle.putString("long",lon);
             bundle.putString("dir",dir);
+            bundle.putString("nom",nom);
             fragment.setArguments(bundle);
         }
         getSupportFragmentManager()

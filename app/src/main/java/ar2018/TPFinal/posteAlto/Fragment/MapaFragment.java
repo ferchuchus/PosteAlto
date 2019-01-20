@@ -36,9 +36,10 @@ public class MapaFragment extends SupportMapFragment implements OnMapReadyCallba
     CameraUpdate cu;
     int llamadoDe;
     List<Equipo> equipos;
-    Double lat;
-    Double lon;
+    Double latitud;
+    Double longitud;
     String direccion;
+    String nombre;
 
 
     public MapaFragment() {
@@ -54,9 +55,10 @@ public class MapaFragment extends SupportMapFragment implements OnMapReadyCallba
         if (argumentos != null) {
             llamadoDe = argumentos.getInt("mapas");
             if (llamadoDe == 2) {
-                lat = Double.parseDouble(argumentos.getString("lat"));
-                lon = Double.parseDouble(argumentos.getString("long"));
+                latitud = Double.parseDouble(argumentos.getString("lat"));
+                longitud = Double.parseDouble(argumentos.getString("long"));
                 direccion = String.valueOf(argumentos.getSize("dir"));
+                nombre=String.valueOf(argumentos.getSize("nom"));
             }
         }
         getMapAsync(this);
@@ -73,7 +75,7 @@ public class MapaFragment extends SupportMapFragment implements OnMapReadyCallba
                 obtenerTodosLosEquipos();
                 break;
             case 2:
-                mostrarGimnasio(lat, lon, direccion);
+                mostrarGimnasio();
                 break;
         }
 
@@ -122,10 +124,10 @@ public class MapaFragment extends SupportMapFragment implements OnMapReadyCallba
         });
     }
 
-    private void mostrarGimnasio(Double latitud, Double longitud, String direccion) {
+    private void mostrarGimnasio() {
         LatLng latLng = new LatLng(latitud, longitud);
-        mapa.addMarker(new MarkerOptions().position(latLng).title(direccion));
-        cu = CameraUpdateFactory.newLatLngZoom(latLng, 10.2f);
+        mapa.addMarker(new MarkerOptions().position(latLng).title(nombre).snippet(direccion));
+        cu = CameraUpdateFactory.newLatLngZoom(latLng, 13.2f);
         mapa.moveCamera(cu);
         }
 }
