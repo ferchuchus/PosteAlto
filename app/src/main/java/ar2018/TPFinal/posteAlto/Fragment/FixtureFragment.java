@@ -71,27 +71,35 @@ public class FixtureFragment extends Fragment {
 
         buscarFechas();
 
-
         imPrevious.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-             /*   if(fechaEnPantalla==totalFechas){
-                txtFecha.setText(fechas.get(fechaEnPantalla-1).getNombre().toUpperCase());
-                buscarPartidosFecha(fechas.get(fechaEnPantalla-1).getId());
-                }
-                else if(fechaEnPantalla==1){
+                if (fechaEnPantalla == 1) {
+                    fechaEnPantalla = totalFechas;
+                    txtFecha.setText(fechas.get(totalFechas - 1).getNombre().toUpperCase());
+                    buscarPartidosFecha(fechas.get(totalFechas - 1).getId());
+                } else {
+                    fechaEnPantalla--;
+                    txtFecha.setText(fechas.get(fechaEnPantalla - 1).getNombre().toUpperCase());
+                    buscarPartidosFecha(fechas.get(fechaEnPantalla - 1).getId());
 
-            }else{
-                    txtFecha.setText(fechas.get(fechaEnPantalla-1).getNombre().toUpperCase());
-                    buscarPartidosFecha(fechas.get(fechaEnPantalla-1).getId());
-                }*/
+                }
             }
         });
         imNext.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                txtFecha.setText(fechas.get(fechaEnPantalla - 1).getNombre().toUpperCase());
-                buscarPartidosFecha(fechas.get(fechaEnPantalla - 1).getId());
+                if (fechaEnPantalla > fechas.size()) {
+                    fechaEnPantalla = 1;
+                    txtFecha.setText(fechas.get(fechaEnPantalla - 1).getNombre().toUpperCase());
+                    buscarPartidosFecha(fechas.get(fechaEnPantalla - 1).getId());
+                } else {
+                    fechaEnPantalla++;
+                    txtFecha.setText(fechas.get(fechaEnPantalla - 2).getNombre().toUpperCase());
+                    buscarPartidosFecha(fechas.get(fechaEnPantalla - 2).getId());
+
+
+                }
             }
         });
         return v;
@@ -118,7 +126,7 @@ public class FixtureFragment extends Fragment {
         t.start();
     }
 
-    private void buscarPartidosFecha(final Integer idFecha) {
+    private void buscarPartidosFechaBD(final Integer idFecha) {
         Runnable r = new Runnable() {
             @Override
             public void run() {
@@ -127,18 +135,9 @@ public class FixtureFragment extends Fragment {
                 try {
                     Response<List<Partido>> response = callPartidos.execute();
                     partidos2 = response.body();
-                    for (Partido p : partidos2) {
-                        Log.d("TRAJO PARTIDOS", "ID: " + p.getId());
-                    }
-                    //VOLVER A OPTIMIZAR LA QUERY
                     for (int i = 0; i < partidos2.size(); i++) {
                         if (partidos2.get(i).getFechaCompetencia().getId() == idFecha)
                             partidos.add(partidos2.get(i));
-                    }
-
-                    Log.d("TRAJO PARTIDOS", "CANTIDAD: " + partidos.size());
-                    for (Partido p : partidos) {
-                        Log.d("TRAJO PARTIDOS", "ID: " + p.getId());
                     }
                     Message mensaje = handler.obtainMessage(_PARTIDOS);
                     mensaje.sendToTarget();
@@ -151,7 +150,16 @@ public class FixtureFragment extends Fragment {
         t.start();
     }
 
-    private void determinarEquipoLibre() {
+    private void buscarPartidosFecha(final Integer idFecha) {
+        partidos.clear();
+        for (int i = 0; i < partidos2.size(); i++) {
+            if (partidos2.get(i).getFechaCompetencia().getId() == idFecha)
+                partidos.add(partidos2.get(i));
+        }
+        determinarEquipoLibre();
+    }
+
+    private void determinarEquipoLibreBD() {
         Runnable r = new Runnable() {
             @Override
             public void run() {
@@ -163,11 +171,11 @@ public class FixtureFragment extends Fragment {
                     for (int i = 0; i < equipos.size(); i++) {
                         nombresEquipos.add(equipos.get(i).getNombre());
                     }
-
                     for (int i = 0; i < partidos.size(); i++) {
                         nombresEquipos.remove(partidos.get(i).getLocal().getNombre());
                         nombresEquipos.remove(partidos.get(i).getVisitante().getNombre());
                     }
+
                     Message mensaje = handler.obtainMessage(_EQUIPOS);
                     mensaje.sendToTarget();
                 } catch (IOException e) {
@@ -179,27 +187,41 @@ public class FixtureFragment extends Fragment {
         t.start();
     }
 
+    private void determinarEquipoLibre() {
+        nombresEquipos.clear();
+        for (int i = 0; i < equipos.size(); i++) {
+            nombresEquipos.add(equipos.get(i).getNombre());
+        }
+        for (int i = 0; i < partidos.size(); i++) {
+            nombresEquipos.remove(partidos.get(i).getLocal().getNombre());
+            nombresEquipos.remove(partidos.get(i).getVisitante().getNombre());
+        }
+        terminarCrearComponentes();
+    }
+
+    private void terminarCrearComponentes() {
+        if (nombresEquipos.size() == 1) {
+            txtEquipoLibre.setText("LIBRE: " + nombresEquipos.get(0));
+        } else {
+            txtEquipoLibre.setText(" ");
+        }
+        fechaAdapter = new FechaAdapter(partidos);
+        rvFecha.setAdapter(fechaAdapter);
+    }
+
     Handler handler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
             if (msg.what == _FECHAS) {
-                for (Fecha f : fechas) {
-                    Log.d("TRAJO", "FECHAS: " + f);
-                }
                 txtFecha.setText(fechas.get(fechaEnPantalla - 1).getNombre().toUpperCase());
-                Log.d("BUSCARE ", "ID FECHA: " + fechas.get(fechaEnPantalla - 1).getId());
-                buscarPartidosFecha(fechas.get(fechaEnPantalla - 1).getId());
+                buscarPartidosFechaBD(fechas.get(fechaEnPantalla - 1).getId());
             }
             if (msg.what == _PARTIDOS) {
-                Log.d("DIGO", "FINISH");
-                determinarEquipoLibre();
+                determinarEquipoLibreBD();
             }
             if (msg.what == _EQUIPOS) {
-                for (Equipo e : equipos) {
-                    Log.d("TRAJO", "EQUIPOS: " + e.getNombre());
-                }
-                txtEquipoLibre.setText(nombresEquipos.get(0));
-
+                txtEquipoLibre.setText("LIBRE: " + nombresEquipos.get(0));
+                fechaEnPantalla++;
                 LinearLayoutManager llm = new LinearLayoutManager(getContext());
                 llm.setOrientation(LinearLayoutManager.VERTICAL);
                 rvFecha.setLayoutManager(llm);
