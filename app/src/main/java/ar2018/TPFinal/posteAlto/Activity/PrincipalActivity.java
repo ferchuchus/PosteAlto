@@ -65,7 +65,7 @@ public class PrincipalActivity extends AppCompatActivity implements FragmentMana
                                 if (fragment == null) {
                                     fragment = new VerCategoriaFragment();
                                     Bundle bundle = new Bundle();
-                                    bundle.putString("MostarCategoria", "C");
+                                    bundle.putString("MostarCategoria", "A");
                                     fragment.setArguments(bundle);
                                 }
                                 fragmentTransaction = true;
@@ -100,7 +100,6 @@ public class PrincipalActivity extends AppCompatActivity implements FragmentMana
                                             Bundle bundle = new Bundle();
                                             bundle.putInt("mapas", 1);
                                             fragment.setArguments(bundle);
-                                            //((MapaFragment) fragment).setListener(PrincipalActivity.this);
                                         }
                                         fragmentTransaction = true;
                                         break;

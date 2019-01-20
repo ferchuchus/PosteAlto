@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
+import ar2018.TPFinal.posteAlto.Activity.FixtureActivity;
 import ar2018.TPFinal.posteAlto.Activity.SeguiEquipoActivity;
 import ar2018.TPFinal.posteAlto.Activity.TablaPosicionesActivity;
 import ar2018.TPFinal.posteAlto.R;
@@ -45,8 +46,8 @@ public class VerCategoriaFragment extends Fragment {
         btnFixture.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-               /* Intent intent = new Intent(getContext(), FixtureActivity.class);
-                startActivity(intent);*/
+               Intent intent = new Intent(getContext(), FixtureActivity.class);
+                startActivity(intent);
             }
         });
         btnTablaPosiciones.setOnClickListener(new View.OnClickListener() {
