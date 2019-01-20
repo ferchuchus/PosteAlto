@@ -199,8 +199,12 @@ public class FixtureFragment extends Fragment {
                     Log.d("TRAJO", "EQUIPOS: " + e.getNombre());
                 }
                 txtEquipoLibre.setText(nombresEquipos.get(0));
+
+                LinearLayoutManager llm = new LinearLayoutManager(getContext());
+                llm.setOrientation(LinearLayoutManager.VERTICAL);
+                rvFecha.setLayoutManager(llm);
                 fechaAdapter = new FechaAdapter(partidos);
-                rvFecha.setAdapter(fechaAdapter);
+                rvFecha.setAdapter( fechaAdapter );
             }
         }
 

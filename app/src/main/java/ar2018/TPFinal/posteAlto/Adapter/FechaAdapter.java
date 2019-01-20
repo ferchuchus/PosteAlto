@@ -68,8 +68,8 @@ public class FechaAdapter extends RecyclerView.Adapter<FechaAdapter.FechaHolder>
         //fechaHolder.ivEquipo2.setImageBitmap(partido.getVisitante().getImagen());
         fechaHolder.txtEquipo1.setText(partido.getLocal().getNombre());
         fechaHolder.txtEquipo2.setText(partido.getVisitante().getNombre());
-        fechaHolder.txtRdo1.setText(partido.getResultado().getTantosL());
-        fechaHolder.txtRdo2.setText(partido.getResultado().getTantosV());
+        fechaHolder.txtRdo1.setText(String.valueOf(partido.getResultado().getTantosL()));
+        fechaHolder.txtRdo2.setText(String.valueOf(partido.getResultado().getTantosV()));
         fechaHolder.txtClub.setText(partido.getLocal().getDireccion());
         fechaHolder.txtClub.setOnClickListener(new View.OnClickListener() {
             @Override
