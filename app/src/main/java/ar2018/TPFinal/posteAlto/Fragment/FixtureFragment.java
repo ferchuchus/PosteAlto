@@ -48,10 +48,10 @@ public class FixtureFragment extends Fragment {
     private ImageView imNext;
     private FechaAdapter fechaAdapter;
     private List<Fecha> fechas = new ArrayList<>();
-    private List<Partido> partidos= new ArrayList<>();
-    private List<Partido> partidos2 =new ArrayList<>();
-    private List<Equipo> equipos=new ArrayList<>();
-    private List<String> nombresEquipos=new ArrayList<>();
+    private List<Partido> partidos = new ArrayList<>();
+    private List<Partido> partidos2 = new ArrayList<>();
+    private List<Equipo> equipos = new ArrayList<>();
+    private List<String> nombresEquipos = new ArrayList<>();
     private Integer fechaEnPantalla = 1;
     private Integer totalFechas;
 
@@ -59,7 +59,7 @@ public class FixtureFragment extends Fragment {
         // Required empty public constructor
     }
 
-     @Override
+    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_fixture, container, false);
@@ -131,9 +131,9 @@ public class FixtureFragment extends Fragment {
                         Log.d("TRAJO PARTIDOS", "ID: " + p.getId());
                     }
                     //VOLVER A OPTIMIZAR LA QUERY
-                    for (int i=0; i<partidos2.size();i++) {
-                        if(partidos2.get(i).getFechaCompetencia().getId()==idFecha)
-                        partidos.add( partidos2.get(i));
+                    for (int i = 0; i < partidos2.size(); i++) {
+                        if (partidos2.get(i).getFechaCompetencia().getId() == idFecha)
+                            partidos.add(partidos2.get(i));
                     }
 
                     Log.d("TRAJO PARTIDOS", "CANTIDAD: " + partidos.size());
@@ -160,11 +160,11 @@ public class FixtureFragment extends Fragment {
                 try {
                     Response<List<Equipo>> response = callEquipos.execute();
                     equipos = response.body();
-                    for (int i=0; i<equipos.size();i++) {
-                        nombresEquipos.add( equipos.get(i).getNombre());
+                    for (int i = 0; i < equipos.size(); i++) {
+                        nombresEquipos.add(equipos.get(i).getNombre());
                     }
 
-                    for (int i=0; i<partidos.size();i++) {
+                    for (int i = 0; i < partidos.size(); i++) {
                         nombresEquipos.remove(partidos.get(i).getLocal().getNombre());
                         nombresEquipos.remove(partidos.get(i).getVisitante().getNombre());
                     }
@@ -187,7 +187,7 @@ public class FixtureFragment extends Fragment {
                     Log.d("TRAJO", "FECHAS: " + f);
                 }
                 txtFecha.setText(fechas.get(fechaEnPantalla - 1).getNombre().toUpperCase());
-                Log.d("BUSCARE ", "ID FECHA: " +  fechas.get(fechaEnPantalla - 1).getId());
+                Log.d("BUSCARE ", "ID FECHA: " + fechas.get(fechaEnPantalla - 1).getId());
                 buscarPartidosFecha(fechas.get(fechaEnPantalla - 1).getId());
             }
             if (msg.what == _PARTIDOS) {
@@ -204,7 +204,7 @@ public class FixtureFragment extends Fragment {
                 llm.setOrientation(LinearLayoutManager.VERTICAL);
                 rvFecha.setLayoutManager(llm);
                 fechaAdapter = new FechaAdapter(partidos);
-                rvFecha.setAdapter( fechaAdapter );
+                rvFecha.setAdapter(fechaAdapter);
             }
         }
 
