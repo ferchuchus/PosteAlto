@@ -33,6 +33,7 @@ public class MapaFragment extends SupportMapFragment implements OnMapReadyCallba
 
     static final int TODOS_LOS_EQUIPOS = 1;
     GoogleMap mapa;
+    CameraUpdate cu;
     int llamadoDe;
     List<Equipo> equipos;
     Double lat;
@@ -96,7 +97,7 @@ public class MapaFragment extends SupportMapFragment implements OnMapReadyCallba
                             builder.include(latLng);
                         }
                         LatLngBounds latLngBounds = builder.build();
-                        CameraUpdate cu = CameraUpdateFactory.newLatLngBounds(latLngBounds, 0);
+                        cu = CameraUpdateFactory.newLatLngBounds(latLngBounds, 0);
                         mapa.moveCamera(cu);
                         break;
                     case 400:
@@ -122,10 +123,9 @@ public class MapaFragment extends SupportMapFragment implements OnMapReadyCallba
     }
 
     private void mostrarGimnasio(Double latitud, Double longitud, String direccion) {
-        LatLngBounds.Builder builder = new LatLngBounds.Builder();
         LatLng latLng = new LatLng(latitud, longitud);
         mapa.addMarker(new MarkerOptions().position(latLng).title(direccion));
-        CameraUpdate cu = CameraUpdateFactory.newLatLngBounds(builder.include(latLng).build(), 1);
+        cu = CameraUpdateFactory.newLatLngZoom(latLng, 10.2f);
         mapa.moveCamera(cu);
         }
 }

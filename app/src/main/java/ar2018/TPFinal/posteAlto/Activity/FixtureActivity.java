@@ -56,7 +56,6 @@ public class FixtureActivity extends AppCompatActivity implements FragmentManage
             bundle.putString("lat",lat);
             bundle.putString("long",lon);
             bundle.putString("dir",dir);
-            Log.d("ENTRA","va a ir con "+lat+ "  "+lon+"  "+dir );
             fragment.setArguments(bundle);
         }
         getSupportFragmentManager()
