@@ -1,7 +1,10 @@
 package ar2018.TPFinal.posteAlto.Fragment;
 
 import android.content.Context;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.LinearLayoutManager;
@@ -33,48 +36,41 @@ import ar2018.TPFinal.posteAlto.RetrofitClient.RestClient;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
 
 public class FixtureFragment extends Fragment {
-    static final String _URL =/*"http://192.168.0.13:5000/"*/"http://192.168.1.5:5000/";
+    static final Integer _EQUIPOS = 1;
+    static final Integer _PARTIDOS = 2;
+    static final Integer _FECHAS = 3;
     private TextView txtFecha;
     private TextView txtEquipoLibre;
     private RecyclerView rvFecha;
     private ImageView imPrevious;
     private ImageView imNext;
     private FechaAdapter fechaAdapter;
-    private List<Fecha> fechas;
-    private List<Partido> partidos;
-    private List<Equipo> equipos;
-    private List<String> nombresEquipos;
-    private Integer fechaEnPantalla=1;
+    private List<Fecha> fechas = new ArrayList<>();
+    private List<Partido> partidos= new ArrayList<>();
+    private List<Partido> partidos2 =new ArrayList<>();
+    private List<Equipo> equipos=new ArrayList<>();
+    private List<String> nombresEquipos=new ArrayList<>();
+    private Integer fechaEnPantalla = 1;
     private Integer totalFechas;
-
-    Gson gson = new GsonBuilder().setLenient().create();
-    Retrofit retrofit=new Retrofit.Builder().baseUrl(_URL).addConverterFactory(GsonConverterFactory.create(gson)).build();
 
     public FixtureFragment() {
         // Required empty public constructor
     }
 
-    @Override
+     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View v =inflater.inflate(R.layout.fragment_fixture, container, false);
+        View v = inflater.inflate(R.layout.fragment_fixture, container, false);
         txtFecha = v.findViewById(R.id.txtFecha);
         txtEquipoLibre = v.findViewById(R.id.txtEquipoLibre);
         rvFecha = v.findViewById(R.id.rvFecha);
         imPrevious = v.findViewById(R.id.ivPrevious);
         imNext = v.findViewById(R.id.ivNext);
 
-        fechas=buscarFechas();
-        totalFechas=fechas.size();
-        for (Fecha f : fechas) {
-            Log.d("TRAJO FECHAS","NOMBRE: "+f.getNombre());
-        }
-        txtFecha.setText(fechas.get(fechaEnPantalla-1).getNombre().toUpperCase());
-        partido=buscarPartidosFecha(fechas.get(fechaEnPantalla-1).getId());
+        buscarFechas();
+
 
         imPrevious.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -94,140 +90,120 @@ public class FixtureFragment extends Fragment {
         imNext.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                txtFecha.setText(fechas.get(fechaEnPantalla-1).getNombre().toUpperCase());
-                buscarPartidosFecha(fechas.get(fechaEnPantalla-1).getId());
+                txtFecha.setText(fechas.get(fechaEnPantalla - 1).getNombre().toUpperCase());
+                buscarPartidosFecha(fechas.get(fechaEnPantalla - 1).getId());
             }
         });
         return v;
     }
 
-    private List<Fecha> buscarFechas() {
-       Log.d("VER","SI ENTRO");
-        FechaDao fechaDAO = RestClient.getInstance().getRetrofit().create(FechaDao.class);
-        Call<List<Fecha>> callEquipos = fechaDAO.listarFechas();
-        Log.d("VER","NOMBRE: "+callEquipos);
-        Response<List<Fecha>> response=null;
-        try{
-            response = invocacionSyn.execute();
-        }catch (IOException e){
-            e.printStackTrace();
+    private void buscarFechas() {
+        Runnable r = new Runnable() {
+            @Override
+            public void run() {
+                FechaDao fechaDAO = RestClient.getInstance().getRetrofit().create(FechaDao.class);
+                Call<List<Fecha>> callFechas = fechaDAO.listarFechas();
+                try {
+                    Response<List<Fecha>> response = callFechas.execute();
+                    fechas = response.body();
+                    totalFechas = fechas.size();
+                    Message mensaje = handler.obtainMessage(_FECHAS);
+                    mensaje.sendToTarget();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        };
+        Thread t = new Thread(r);
+        t.start();
+    }
+
+    private void buscarPartidosFecha(final Integer idFecha) {
+        Runnable r = new Runnable() {
+            @Override
+            public void run() {
+                PartidoDao partidoDao = RestClient.getInstance().getRetrofit().create(PartidoDao.class);
+                Call<List<Partido>> callPartidos = partidoDao.listarPartidos();//EnFecha(idFecha);
+                try {
+                    Response<List<Partido>> response = callPartidos.execute();
+                    partidos2 = response.body();
+                    for (Partido p : partidos2) {
+                        Log.d("TRAJO PARTIDOS", "ID: " + p.getId());
+                    }
+                    //VOLVER A OPTIMIZAR LA QUERY
+                    for (int i=0; i<partidos2.size();i++) {
+                        if(partidos2.get(i).getFechaCompetencia().getId()==idFecha)
+                        partidos.add( partidos2.get(i));
+                    }
+
+                    Log.d("TRAJO PARTIDOS", "CANTIDAD: " + partidos.size());
+                    for (Partido p : partidos) {
+                        Log.d("TRAJO PARTIDOS", "ID: " + p.getId());
+                    }
+                    Message mensaje = handler.obtainMessage(_PARTIDOS);
+                    mensaje.sendToTarget();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        };
+        Thread t = new Thread(r);
+        t.start();
+    }
+
+    private void determinarEquipoLibre() {
+        Runnable r = new Runnable() {
+            @Override
+            public void run() {
+                EquipoDao equipoDao = RestClient.getInstance().getRetrofit().create(EquipoDao.class);
+                Call<List<Equipo>> callEquipos = equipoDao.listarEquipos();
+                try {
+                    Response<List<Equipo>> response = callEquipos.execute();
+                    equipos = response.body();
+                    for (int i=0; i<equipos.size();i++) {
+                        nombresEquipos.add( equipos.get(i).getNombre());
+                    }
+
+                    for (int i=0; i<partidos.size();i++) {
+                        nombresEquipos.remove(partidos.get(i).getLocal().getNombre());
+                        nombresEquipos.remove(partidos.get(i).getVisitante().getNombre());
+                    }
+                    Message mensaje = handler.obtainMessage(_EQUIPOS);
+                    mensaje.sendToTarget();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        };
+        Thread t = new Thread(r);
+        t.start();
+    }
+
+    Handler handler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            if (msg.what == _FECHAS) {
+                for (Fecha f : fechas) {
+                    Log.d("TRAJO", "FECHAS: " + f);
+                }
+                txtFecha.setText(fechas.get(fechaEnPantalla - 1).getNombre().toUpperCase());
+                Log.d("BUSCARE ", "ID FECHA: " +  fechas.get(fechaEnPantalla - 1).getId());
+                buscarPartidosFecha(fechas.get(fechaEnPantalla - 1).getId());
+            }
+            if (msg.what == _PARTIDOS) {
+                Log.d("DIGO", "FINISH");
+                determinarEquipoLibre();
+            }
+            if (msg.what == _EQUIPOS) {
+                for (Equipo e : equipos) {
+                    Log.d("TRAJO", "EQUIPOS: " + e.getNombre());
+                }
+                txtEquipoLibre.setText(nombresEquipos.get(0));
+                fechaAdapter = new FechaAdapter(partidos);
+                rvFecha.setAdapter(fechaAdapter);
+            }
         }
-        return response.body();
 
-        callEquipos.enqueue(new Callback<List<Fecha>>() {
-            @Override
-            public void onResponse(Call<List<Fecha>> call, Response<List<Fecha>> response) {
-                switch (response.code()) {
-                    case 200:
-                        fechas = response.body();
-                        totalFechas=fechas.size();
-                        for (Fecha f : fechas) {
-                            Log.d("TRAJO FECHAS","NOMBRE: "+f.getNombre());
-                        }
-                        txtFecha.setText(fechas.get(fechaEnPantalla-1).getNombre().toUpperCase());
-                        buscarPartidosFecha(fechas.get(fechaEnPantalla-1).getId());
-                        break;
-                    case 400:
-                        Toast.makeText(getContext(), "Bad Request",
-                                Toast.LENGTH_LONG).show();
-                        break;
-                    case 500:
-                        Toast.makeText(getContext(), "Internal Server Error",
-                                Toast.LENGTH_LONG).show();
-                        break;
-                    default:
-                        Toast.makeText(getContext(), "NO TA",
-                                Toast.LENGTH_LONG).show();
-                        break;
-                }
-            }
-
-            @Override
-            public void onFailure(Call<List<Fecha>> call, Throwable t) {
-
-            }
-        });
-
-    }
-
-    private void buscarPartidosFecha(Integer idFecha) {
-        PartidoDao partidoDao = RestClient.getInstance().getRetrofit().create(PartidoDao.class);
-        Call<List<Partido>> callPartidos = partidoDao.listarParidosEnFecha(idFecha);
-        Log.d("VER","NOMBRE: "+callPartidos);
-        callPartidos.enqueue(new Callback<List<Partido>>() {
-            @Override
-            public void onResponse(Call<List<Partido>> call, Response<List<Partido>> response) {
-                switch (response.code()) {
-                    case 200:
-                        partidos = response.body();
-                        for (Partido p : partidos) {
-                            Log.d("TRAJO PARTIDOS","ID: "+p.getId());
-                        }
-                        determinarEquipoLibre();
-                        break;
-                    case 400:
-                        Toast.makeText(getContext(), "Bad Request",
-                                Toast.LENGTH_LONG).show();
-                        break;
-                    case 500:
-                        Toast.makeText(getContext(), "Internal Server Error",
-                                Toast.LENGTH_LONG).show();
-                        break;
-                    default:
-                        Toast.makeText(getContext(), "NO TA",
-                                Toast.LENGTH_LONG).show();
-                        break;
-                }
-            }
-
-            @Override
-            public void onFailure(Call<List<Partido>> call, Throwable t) {
-
-            }
-        });
-    }
-
-    private void determinarEquipoLibre(){
-        EquipoDao equipoDao= RestClient.getInstance().getRetrofit().create(EquipoDao.class);
-        Call<List<Equipo>> callEquipos= equipoDao.listarEquipos();
-        callEquipos.enqueue(new Callback<List<Equipo>>() {
-            @Override
-            public void onResponse(Call<List<Equipo>> call, Response<List<Equipo>> response) {
-                switch (response.code()) {
-                    case 200:
-                        equipos = response.body();
-                        for (Equipo e : equipos) {
-                            Log.d("TRAJO Eqipos","NOMBRE: "+e.getNombre());
-                            nombresEquipos.add(e.getNombre());
-                        }
-                        for(Partido p: partidos){
-                            nombresEquipos.remove(p.getLocal().getNombre());
-                            nombresEquipos.remove(p.getVisitante().getNombre());
-                        }
-                        txtEquipoLibre.setText(nombresEquipos.get(0));
-                        fechaAdapter = new FechaAdapter(partidos);
-                        rvFecha.setAdapter(fechaAdapter);
-                        break;
-                    case 400:
-                        Toast.makeText(getContext(), "Bad Request",
-                                Toast.LENGTH_LONG).show();
-                        break;
-                    case 500:
-                        Toast.makeText(getContext(), "Internal Server Error",
-                                Toast.LENGTH_LONG).show();
-                        break;
-                    default:
-                        Toast.makeText(getContext(), "NO TA",
-                                Toast.LENGTH_LONG).show();
-                        break;
-                }
-            }
-
-            @Override
-            public void onFailure(Call<List<Equipo>> call, Throwable t) {
-
-            }
-        });
-    }
+    };
 
 }
