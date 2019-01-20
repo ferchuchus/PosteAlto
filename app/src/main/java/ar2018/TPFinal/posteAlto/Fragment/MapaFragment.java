@@ -14,6 +14,7 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.MarkerOptions;
@@ -53,7 +54,7 @@ public class MapaFragment extends SupportMapFragment implements OnMapReadyCallba
             llamadoDe = argumentos.getInt("mapas");
             if (llamadoDe == 2) {
                 lat = Double.parseDouble(argumentos.getString("lat"));
-                lon = Double.parseDouble(argumentos.getString("lon"));
+                lon = Double.parseDouble(argumentos.getString("long"));
                 direccion = String.valueOf(argumentos.getSize("dir"));
             }
         }
@@ -124,9 +125,7 @@ public class MapaFragment extends SupportMapFragment implements OnMapReadyCallba
         LatLngBounds.Builder builder = new LatLngBounds.Builder();
         LatLng latLng = new LatLng(latitud, longitud);
         mapa.addMarker(new MarkerOptions().position(latLng).title(direccion));
-        builder.include(latLng);
-        LatLngBounds latLngBounds = builder.build();
-        CameraUpdate cu = CameraUpdateFactory.newLatLngBounds(latLngBounds, 0);
+        CameraUpdate cu = CameraUpdateFactory.newLatLngBounds(builder.include(latLng).build(), 1);
         mapa.moveCamera(cu);
-    }
+        }
 }

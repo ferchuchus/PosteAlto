@@ -24,25 +24,26 @@ public class FixtureActivity extends AppCompatActivity implements FragmentManage
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_fixture);
-        shouldDisplayHomeUp();
+    //    shouldDisplayHomeUp();
         Intent i = getIntent();
         if(i.getExtras()!=null) {
             lat = String.valueOf(i.getExtras().get("Latitud"));
             lon = String.valueOf( i.getExtras().get("Longitud"));
             dir = String.valueOf( i.getExtras().get("Direccion"));
             mostrarGimnasio(lat,lon,dir);
+        }else {
+            String tag = "fixture";
+            Fragment fragment = getSupportFragmentManager().findFragmentByTag(tag);
+            if (fragment == null) {
+                fragment = new FixtureFragment();
+            }
+            getSupportFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.contenido, fragment, tag)
+                    //.addToBackStack(null)
+                    .show(fragment)
+                    .commit();
         }
-        String tag = "fixture";
-        Fragment fragment = getSupportFragmentManager().findFragmentByTag(tag);
-        if (fragment == null) {
-            fragment = new FixtureFragment();
-        }
-        getSupportFragmentManager()
-                .beginTransaction()
-                .replace(R.id.contenido, fragment, tag)
-                .addToBackStack(null)
-                .show(fragment)
-                .commit();
     }
 
     public void mostrarGimnasio(final String lat, final String lon, String dir) {
@@ -51,16 +52,17 @@ public class FixtureActivity extends AppCompatActivity implements FragmentManage
         if (fragment == null) {
             fragment = new MapaFragment();
             Bundle bundle = new Bundle();
-            bundle.putInt("mapas", 0);
+            bundle.putInt("mapas", 2);
             bundle.putString("lat",lat);
             bundle.putString("long",lon);
             bundle.putString("dir",dir);
+            Log.d("ENTRA","va a ir con "+lat+ "  "+lon+"  "+dir );
             fragment.setArguments(bundle);
         }
         getSupportFragmentManager()
                     .beginTransaction()
                     .replace(R.id.contenido, fragment, tag)
-                    .addToBackStack(null)
+                    //.addToBackStack(null)
                     .show(fragment)
                     .commit();
 

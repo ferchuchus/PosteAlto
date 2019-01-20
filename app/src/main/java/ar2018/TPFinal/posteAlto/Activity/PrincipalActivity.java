@@ -100,7 +100,6 @@ public class PrincipalActivity extends AppCompatActivity implements FragmentMana
                                             Bundle bundle = new Bundle();
                                             bundle.putInt("mapas", 1);
                                             fragment.setArguments(bundle);
-                                            //((MapaFragment) fragment).setListener(PrincipalActivity.this);
                                         }
                                         fragmentTransaction = true;
                                         break;
