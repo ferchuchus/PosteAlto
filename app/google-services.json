@@ -15,14 +15,6 @@
       },
       "oauth_client": [
         {
-          "client_id": "849829837532-u0fefogkuuqsiqmfr5si1o2reetsdjen.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "ar2018.TPFinal.posteAlto",
-            "certificate_hash": "66dcc7064423728f17a10f23801f7c34d537f07a"
-          }
-        },
-        {
           "client_id": "849829837532-fgidg01f5b2m95sal11pi16d1lo4rfq3.apps.googleusercontent.com",
           "client_type": 3
         }
@@ -37,13 +29,8 @@
           "status": 1
         },
         "appinvite_service": {
-          "status": 2,
-          "other_platform_oauth_client": [
-            {
-              "client_id": "849829837532-fgidg01f5b2m95sal11pi16d1lo4rfq3.apps.googleusercontent.com",
-              "client_type": 3
-            }
-          ]
+          "status": 1,
+          "other_platform_oauth_client": []
         },
         "ads_service": {
           "status": 2
