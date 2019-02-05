@@ -1,7 +1,9 @@
 package ar2018.TPFinal.posteAlto.Activity;
 
+import android.content.DialogInterface;
 import android.os.Handler;
 import android.os.Message;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -23,6 +25,7 @@ import retrofit2.Response;
 
 public class SeguiEquipoActivity extends AppCompatActivity {
     static final int EQUIPOS_CARGADOS=1;
+    static final int ERROR=2;
     ListView lvSeguiEquipo;
     List<Equipo> listaEquipos= new ArrayList<Equipo>();
 
@@ -60,8 +63,24 @@ public class SeguiEquipoActivity extends AppCompatActivity {
     Handler handler= new Handler(){
         @Override
         public void handleMessage(Message msg) {
-            if(msg.what==EQUIPOS_CARGADOS)
-                lvSeguiEquipo.setAdapter(new SeguiEquipoAdapter(getApplicationContext(),listaEquipos));
+            switch (msg.what){
+                case EQUIPOS_CARGADOS:
+                    lvSeguiEquipo.setAdapter(new SeguiEquipoAdapter(getApplicationContext(),listaEquipos));
+                    break;
+                case ERROR:
+                    AlertDialog alertDialog= new AlertDialog.Builder(SeguiEquipoActivity.this).create();
+                    alertDialog.setTitle("Error de Conexión");
+                    alertDialog.setMessage("Revise su conexión de internet y vuelva a ejecutar");
+                    alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
+                            new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    dialog.dismiss();
+                                }
+                            });
+                    alertDialog.show();
+                    break;
+            }
         }
     };
 }

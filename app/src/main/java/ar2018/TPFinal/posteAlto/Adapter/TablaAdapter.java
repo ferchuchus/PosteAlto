@@ -49,7 +49,7 @@ public class TablaAdapter extends ArrayAdapter<FilaTabla> {
         holder.tvTF.setText(String.valueOf(filaEquipo.getTf()));
         holder.tvTC.setText(String.valueOf(filaEquipo.getTc()));
         holder.tvD.setText(String.valueOf(filaEquipo.getD()));
-        if ((position+1)/2==0) {
+        if ((position)%2==0) {
             holder.tvEquipo.setTextColor(Color.parseColor("#000000"));
             holder.tvPG.setTextColor(Color.parseColor("#000000"));
             holder.tvPP.setTextColor(Color.parseColor("#000000"));

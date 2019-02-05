@@ -2,6 +2,7 @@ package ar2018.TPFinal.posteAlto.Activity;
 
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
+import android.content.DialogInterface;
 import android.os.Build;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
@@ -9,6 +10,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -16,6 +18,7 @@ import android.text.SpannableString;
 import android.text.style.ForegroundColorSpan;
 import android.util.Log;
 import android.view.MenuItem;
+import android.widget.Switch;
 
 import ar2018.TPFinal.posteAlto.Fragment.MapaFragment;
 import ar2018.TPFinal.posteAlto.Fragment.MenuFragment;
@@ -49,6 +52,7 @@ public class PrincipalActivity extends AppCompatActivity implements FragmentMana
                         boolean fragmentTransaction = false;
                         Fragment fragment = null;
                         String tag = "";
+                        AlertDialog alertDialog=null;
                         switch (menuItem.getItemId()) {
                             case R.id.optInicio:
                                 tag = "menu";
@@ -71,7 +75,7 @@ public class PrincipalActivity extends AppCompatActivity implements FragmentMana
                                 fragmentTransaction = true;
                                 break;
                             case R.id.opCatB:
-                                tag = "categoria";
+                                /*tag = "categoria";
                                 fragment = getSupportFragmentManager().findFragmentByTag(tag);
                                 if (fragment == null) {
                                     fragment = new VerCategoriaFragment();
@@ -79,10 +83,21 @@ public class PrincipalActivity extends AppCompatActivity implements FragmentMana
                                     bundle.putString("MostarCategoria", "B");
                                     fragment.setArguments(bundle);
                                 }
-                                fragmentTransaction = true;
+                                fragmentTransaction = true;*/
+                                alertDialog= new AlertDialog.Builder(PrincipalActivity.this).create();
+                                alertDialog.setTitle("Categoría no disponible");
+                                alertDialog.setMessage("Sección en construcción");
+                                alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
+                                        new DialogInterface.OnClickListener() {
+                                            @Override
+                                            public void onClick(DialogInterface dialog, int which) {
+                                                dialog.dismiss();
+                                            }
+                                        });
+                                alertDialog.show();
                                 break;
                             case R.id.opCatC:
-                                tag = "categoria";
+                                /*tag = "categoria";
                                 fragment = getSupportFragmentManager().findFragmentByTag(tag);
                                 if (fragment == null) {
                                     fragment = new VerCategoriaFragment();
@@ -101,7 +116,18 @@ public class PrincipalActivity extends AppCompatActivity implements FragmentMana
                                             bundle.putInt("mapas", 1);
                                             fragment.setArguments(bundle);
                                         }
-                                        fragmentTransaction = true;
+                                        fragmentTransaction = true;*/
+                                alertDialog= new AlertDialog.Builder(PrincipalActivity.this).create();
+                                alertDialog.setTitle("Categoría no disponible");
+                                alertDialog.setMessage("Sección en construcción");
+                                alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
+                                        new DialogInterface.OnClickListener() {
+                                            @Override
+                                            public void onClick(DialogInterface dialog, int which) {
+                                                dialog.dismiss();
+                                            }
+                                        });
+                                alertDialog.show();
                                         break;
                         }
                         if (fragmentTransaction) {
@@ -184,18 +210,50 @@ public class PrincipalActivity extends AppCompatActivity implements FragmentMana
 
     @Override
     public void mostrarCategoria(String cat) {
-        String tag = "categoria";
-        Fragment fragment = getSupportFragmentManager().findFragmentByTag(tag);
-        if (fragment == null) {
-            fragment = new VerCategoriaFragment();
+        AlertDialog alertDialog=null;
+        switch (cat){
+            case "A":
+                String tag = "categoria";
+                Fragment fragment = getSupportFragmentManager().findFragmentByTag(tag);
+                if (fragment == null) {
+                    fragment = new VerCategoriaFragment();
+                }
+                Bundle bundle = new Bundle();
+                bundle.putString("MostarCategoria", cat);
+                fragment.setArguments(bundle);
+                getSupportFragmentManager()
+                        .beginTransaction()
+                        .replace(R.id.contenido, fragment)
+                        .commit();
+                break;
+            case "B":
+                alertDialog= new AlertDialog.Builder(PrincipalActivity.this).create();
+                alertDialog.setTitle("Categoría no disponible");
+                alertDialog.setMessage("Sección en construcción");
+                alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
+                        new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.dismiss();
+                            }
+                        });
+                alertDialog.show();
+                break;
+            case "C":
+                alertDialog= new AlertDialog.Builder(PrincipalActivity.this).create();
+                alertDialog.setTitle("Categoría no disponible");
+                alertDialog.setMessage("Sección en construcción");
+                alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
+                        new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.dismiss();
+                            }
+                        });
+                alertDialog.show();
+                break;
         }
-        Bundle bundle = new Bundle();
-        bundle.putString("MostarCategoria", cat);
-        fragment.setArguments(bundle);
-        getSupportFragmentManager()
-                .beginTransaction()
-                .replace(R.id.contenido, fragment)
-                .commit();
+
     }
     private void createNotificationChannel(){
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
