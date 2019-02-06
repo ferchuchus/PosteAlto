@@ -26,21 +26,21 @@ public class EstadoPartidoReceiver extends BroadcastReceiver {
         NotificationCompat.Builder notification=null;
         Uri defaultSoundUri= RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
         String mensaje= null;
-        String titulo=null;
+        String titulo="Poste Alto";
         switch(intent.getAction()){
             case "Partido.Estado.Iniciado":
-                titulo="PARTIDO INICIADO";
-                mensaje=intent.getExtras().getString("local")+" vs "+
+               // titulo=;
+                mensaje="PARTIDO INICIADO\n"+intent.getExtras().getString("local")+" vs "+
                         intent.getExtras().getString("visitante")+" ha comenzado";
                 break;
             case "Partido.Estado.Fin2doCuarto":
-                titulo="HA FINALIZADO EL 2DO CUARTO";
-                mensaje=intent.getExtras().getString("local")+" "+intent.getExtras().getInt("tantosL")+
+               // titulo=;
+                mensaje="HA FINALIZADO EL 2DO CUARTO\n"+intent.getExtras().getString("local")+" "+intent.getExtras().getInt("tantosL")+
                         " - "+intent.getExtras().getInt("tantosV")+intent.getExtras().getString("visitante");
                 break;
             case "Partido.Estado.Finalizado":
-                titulo="PARTIDO FINALIZADO";
-                mensaje=intent.getExtras().getString("local")+" "+intent.getExtras().getInt("tantosL")+
+                //titulo
+                mensaje="PARTIDO FINALIZADO\n"+intent.getExtras().getString("local")+" "+intent.getExtras().getInt("tantosL")+
                         " - "+intent.getExtras().getInt("tantosV")+intent.getExtras().getString("visitante");
                 break;
             case "aviso partido proximo":
@@ -48,8 +48,8 @@ public class EstadoPartidoReceiver extends BroadcastReceiver {
                 SimpleDateFormat sdf= new SimpleDateFormat("HH:mm");
                 sdf.setTimeZone(TimeZone.getTimeZone("UTC"));
                 String hora= sdf.format(new Date(timeStamp*1000));
-                titulo="AVISO DE PARTIDO";
-                mensaje=intent.getExtras().get("local")+" vs "+intent.getExtras().getString("visitante")+
+                //titulo="Poste Alto";
+                mensaje="AVISO DE PARTIDO\n"+ intent.getExtras().get("local")+" vs "+intent.getExtras().getString("visitante")+
                         " comenzara a las "+hora;
 
         }
