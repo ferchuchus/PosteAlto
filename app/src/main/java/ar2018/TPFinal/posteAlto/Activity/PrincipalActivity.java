@@ -52,7 +52,7 @@ public class PrincipalActivity extends AppCompatActivity implements FragmentMana
                         boolean fragmentTransaction = false;
                         Fragment fragment = null;
                         String tag = "";
-                        AlertDialog alertDialog=null;
+                        AlertDialog alertDialog = null;
                         switch (menuItem.getItemId()) {
                             case R.id.optInicio:
                                 tag = "menu";
@@ -84,7 +84,7 @@ public class PrincipalActivity extends AppCompatActivity implements FragmentMana
                                     fragment.setArguments(bundle);
                                 }
                                 fragmentTransaction = true;*/
-                                alertDialog= new AlertDialog.Builder(PrincipalActivity.this).create();
+                                alertDialog = new AlertDialog.Builder(PrincipalActivity.this).create();
                                 alertDialog.setTitle("Categoría no disponible");
                                 alertDialog.setMessage("Sección en construcción");
                                 alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
@@ -105,19 +105,9 @@ public class PrincipalActivity extends AppCompatActivity implements FragmentMana
                                     bundle.putString("MostarCategoria", "C");
                                     fragment.setArguments(bundle);
                                 }
+                                fragmentTransaction = true;*/
                                 fragmentTransaction = true;
-                                break;
-                                    case R.id.optGym:
-                                        tag = "gimnasios";
-                                        fragment = getSupportFragmentManager().findFragmentByTag(tag);
-                                        if (fragment == null) {
-                                            fragment = new MapaFragment();
-                                            Bundle bundle = new Bundle();
-                                            bundle.putInt("mapas", 1);
-                                            fragment.setArguments(bundle);
-                                        }
-                                        fragmentTransaction = true;*/
-                                alertDialog= new AlertDialog.Builder(PrincipalActivity.this).create();
+                                alertDialog = new AlertDialog.Builder(PrincipalActivity.this).create();
                                 alertDialog.setTitle("Categoría no disponible");
                                 alertDialog.setMessage("Sección en construcción");
                                 alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
@@ -128,7 +118,18 @@ public class PrincipalActivity extends AppCompatActivity implements FragmentMana
                                             }
                                         });
                                 alertDialog.show();
-                                        break;
+                                break;
+                            case R.id.optGym:
+                                tag = "gimnasios";
+                                fragment = getSupportFragmentManager().findFragmentByTag(tag);
+                                if (fragment == null) {
+                                    fragment = new MapaFragment();
+                                    Bundle bundle = new Bundle();
+                                    bundle.putInt("mapas", 1);
+                                    fragment.setArguments(bundle);
+                                }
+                                fragmentTransaction = true;
+                                break;
                         }
                         if (fragmentTransaction) {
                             getSupportFragmentManager()
@@ -186,10 +187,10 @@ public class PrincipalActivity extends AppCompatActivity implements FragmentMana
 
     public void shouldDisplayHomeUp() {
         boolean canback = getSupportFragmentManager().getBackStackEntryCount() > 0;
-       // getSupportActionBar().setDisplayHomeAsUpEnabled(canback);
-        ActionBar actionBar= getSupportActionBar();
-        Log.d("ACTION BAR", "ab="+actionBar);
-        if(getSupportActionBar()!=null) getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        // getSupportActionBar().setDisplayHomeAsUpEnabled(canback);
+        ActionBar actionBar = getSupportActionBar();
+        Log.d("ACTION BAR", "ab=" + actionBar);
+        if (getSupportActionBar() != null) getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
     @Override
@@ -210,8 +211,8 @@ public class PrincipalActivity extends AppCompatActivity implements FragmentMana
 
     @Override
     public void mostrarCategoria(String cat) {
-        AlertDialog alertDialog=null;
-        switch (cat){
+        AlertDialog alertDialog = null;
+        switch (cat) {
             case "A":
                 String tag = "categoria";
                 Fragment fragment = getSupportFragmentManager().findFragmentByTag(tag);
@@ -227,7 +228,7 @@ public class PrincipalActivity extends AppCompatActivity implements FragmentMana
                         .commit();
                 break;
             case "B":
-                alertDialog= new AlertDialog.Builder(PrincipalActivity.this).create();
+                alertDialog = new AlertDialog.Builder(PrincipalActivity.this).create();
                 alertDialog.setTitle("Categoría no disponible");
                 alertDialog.setMessage("Sección en construcción");
                 alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
@@ -240,7 +241,7 @@ public class PrincipalActivity extends AppCompatActivity implements FragmentMana
                 alertDialog.show();
                 break;
             case "C":
-                alertDialog= new AlertDialog.Builder(PrincipalActivity.this).create();
+                alertDialog = new AlertDialog.Builder(PrincipalActivity.this).create();
                 alertDialog.setTitle("Categoría no disponible");
                 alertDialog.setMessage("Sección en construcción");
                 alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
@@ -255,14 +256,15 @@ public class PrincipalActivity extends AppCompatActivity implements FragmentMana
         }
 
     }
-    private void createNotificationChannel(){
-        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
-            CharSequence name= getString(R.string.channel_name);
+
+    private void createNotificationChannel() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            CharSequence name = getString(R.string.channel_name);
             String description = getString(R.string.channel_description);
-            int importance= NotificationManager.IMPORTANCE_DEFAULT;
-            NotificationChannel channel= new NotificationChannel("CANAL01", name,importance);
+            int importance = NotificationManager.IMPORTANCE_DEFAULT;
+            NotificationChannel channel = new NotificationChannel("CANAL01", name, importance);
             channel.setDescription(description);
-            NotificationManager notificationManager=getSystemService(NotificationManager.class);
+            NotificationManager notificationManager = getSystemService(NotificationManager.class);
             notificationManager.createNotificationChannel(channel);
         }
     }

@@ -17,11 +17,11 @@ public class RestClient {
     }
 
     //json-server --host 192.168.1.3 -p 5000 Documents/posteAlto-db.json  ---> Tener el celu y la compu en la misma RED
-    //http://192.168.1.5:5000/
+    //http://192.168.1.3:5000/
 
     private RestClient() {
         Gson gson = new GsonBuilder().setLenient().create();
-        retrofit = new Retrofit.Builder().baseUrl(/*"http://192.168.0.13:5000/"*/"http://192.168.0.24:5000/").addConverterFactory(GsonConverterFactory.create(gson)).build();
+        retrofit = new Retrofit.Builder().baseUrl("http://192.168.1.3:5000/").addConverterFactory(GsonConverterFactory.create(gson)).build();
      }
 
     public Retrofit getRetrofit() {
