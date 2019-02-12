@@ -42,7 +42,6 @@ public class TablaAdapter extends ArrayAdapter<FilaTabla> {
 
         FilaTabla filaEquipo = super.getItem(position);
         holder.ivImagen.setImageBitmap(filaEquipo.getImagenEquipo());
-        //CONVERTIR LA IMAGEN COMO VOS SABES ---> holder.ivImagen.setImageBitmap(equipo.getImagen().getImagen());
         holder.tvEquipo.setText(filaEquipo.getNombreEquipo());
         holder.tvPG.setText(String.valueOf(filaEquipo.getPg()));
         holder.tvPP.setText(String.valueOf(filaEquipo.getPp()));

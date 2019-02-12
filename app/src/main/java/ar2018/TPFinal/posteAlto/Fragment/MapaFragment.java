@@ -99,7 +99,7 @@ public class MapaFragment extends SupportMapFragment implements OnMapReadyCallba
                             builder.include(latLng);
                         }
                         LatLngBounds latLngBounds = builder.build();
-                        cu = CameraUpdateFactory.newLatLngBounds(latLngBounds, 0);
+                        cu = CameraUpdateFactory.newLatLngBounds(latLngBounds, 1); //ERROR EN MI CELU CON 0
                         mapa.moveCamera(cu);
                         break;
                     case 400:

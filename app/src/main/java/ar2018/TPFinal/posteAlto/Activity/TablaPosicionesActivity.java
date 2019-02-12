@@ -72,7 +72,7 @@ public class TablaPosicionesActivity extends AppCompatActivity {
             String encode= e.getImagen().getImagen();
             String pureCodeBase64=encode.substring(encode.indexOf(",")+1);
             byte[] decodeString= Base64.decode(pureCodeBase64, Base64.DEFAULT);
-            fT.setImagenEquipo(BitmapFactory.decodeByteArray(decodeString, 0, decodeString.length));//falata proceso para convertir imagen
+            fT.setImagenEquipo(BitmapFactory.decodeByteArray(decodeString, 0, decodeString.length));
             fT.setNombreEquipo(e.getNombre());
             fT.setPg(pg);
             fT.setPp(pp);
