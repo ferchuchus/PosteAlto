@@ -1,8 +1,10 @@
 package ar2018.TPFinal.posteAlto.Activity;
 
+import android.content.DialogInterface;
 import android.graphics.BitmapFactory;
 import android.os.Handler;
 import android.os.Message;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Base64;
@@ -28,6 +30,7 @@ import retrofit2.Response;
 
 public class TablaPosicionesActivity extends AppCompatActivity {
     static final int LISTAS_CARGADAS=1;
+    static final int ERROR=2;
     ListView lvTablaPosiciones;
     List<Equipo> listaEquipos= new ArrayList<Equipo>();
     List<FilaTabla> listaOrdenada= new ArrayList<FilaTabla>();
@@ -106,6 +109,8 @@ public class TablaPosicionesActivity extends AppCompatActivity {
                     mensaje.sendToTarget();
                 } catch (IOException e) {
                     e.printStackTrace();
+                    Message mensaje= handler.obtainMessage(ERROR);
+                    mensaje.sendToTarget();
                 }
             }
         };
@@ -127,10 +132,24 @@ public class TablaPosicionesActivity extends AppCompatActivity {
     Handler handler= new Handler(){
         @Override
         public void handleMessage(Message msg) {
-            if(msg.what==LISTAS_CARGADAS){
-                buscarPartidosTRegular();
-                listaOrdenada=calcularTabla();
-                lvTablaPosiciones.setAdapter(new TablaAdapter(getApplicationContext(), listaOrdenada));
+            switch (msg.what){
+                case 1:
+                    buscarPartidosTRegular();
+                    listaOrdenada=calcularTabla();
+                    lvTablaPosiciones.setAdapter(new TablaAdapter(getApplicationContext(), listaOrdenada));
+                    break;
+                case 2:
+                    AlertDialog alertDialog= new AlertDialog.Builder(TablaPosicionesActivity.this).create();
+                    alertDialog.setTitle("Error de Conexión");
+                    alertDialog.setMessage("Revise su conexión de internet y vuelva a ejecutar");
+                    alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
+                            new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    dialog.dismiss();
+                                }
+                            });
+                    alertDialog.show();
             }
         }
     };

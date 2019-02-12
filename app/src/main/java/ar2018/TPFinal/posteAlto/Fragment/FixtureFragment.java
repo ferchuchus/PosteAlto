@@ -1,29 +1,24 @@
 package ar2018.TPFinal.posteAlto.Fragment;
 
-import android.content.Context;
-import android.net.Uri;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v4.app.Fragment;
-import android.support.v4.view.ViewPager;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
-
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import ar2018.TPFinal.posteAlto.Activity.TablaPosicionesActivity;
 import ar2018.TPFinal.posteAlto.Adapter.FechaAdapter;
 import ar2018.TPFinal.posteAlto.Dao.EquipoDao;
 import ar2018.TPFinal.posteAlto.Dao.FechaDao;
@@ -34,13 +29,13 @@ import ar2018.TPFinal.posteAlto.Modelo.Partido;
 import ar2018.TPFinal.posteAlto.R;
 import ar2018.TPFinal.posteAlto.RetrofitClient.RestClient;
 import retrofit2.Call;
-import retrofit2.Callback;
 import retrofit2.Response;
 
 public class FixtureFragment extends Fragment {
-    static final Integer _EQUIPOS = 1;
-    static final Integer _PARTIDOS = 2;
-    static final Integer _FECHAS = 3;
+    static final int _EQUIPOS = 1;
+    static final int _PARTIDOS = 2;
+    static final int _FECHAS = 3;
+    static final int ERROR = 4;
     private TextView txtFecha;
     private TextView txtEquipoLibre;
     private RecyclerView rvFecha;
@@ -119,6 +114,8 @@ public class FixtureFragment extends Fragment {
                     mensaje.sendToTarget();
                 } catch (IOException e) {
                     e.printStackTrace();
+                    Message mensaje= handler.obtainMessage(ERROR);
+                    mensaje.sendToTarget();
                 }
             }
         };
@@ -143,6 +140,8 @@ public class FixtureFragment extends Fragment {
                     mensaje.sendToTarget();
                 } catch (IOException e) {
                     e.printStackTrace();
+                    Message mensaje= handler.obtainMessage(ERROR);
+                    mensaje.sendToTarget();
                 }
             }
         };
@@ -180,6 +179,8 @@ public class FixtureFragment extends Fragment {
                     mensaje.sendToTarget();
                 } catch (IOException e) {
                     e.printStackTrace();
+                    Message mensaje = handler.obtainMessage(ERROR);
+                    mensaje.sendToTarget();
                 }
             }
         };
@@ -212,21 +213,36 @@ public class FixtureFragment extends Fragment {
     Handler handler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
-            if (msg.what == _FECHAS) {
-                txtFecha.setText(fechas.get(fechaEnPantalla - 1).getNombre().toUpperCase());
-                buscarPartidosFechaBD(fechas.get(fechaEnPantalla - 1).getId());
-            }
-            if (msg.what == _PARTIDOS) {
-                determinarEquipoLibreBD();
-            }
-            if (msg.what == _EQUIPOS) {
-                txtEquipoLibre.setText("LIBRE: " + nombresEquipos.get(0));
-                fechaEnPantalla++;
-                LinearLayoutManager llm = new LinearLayoutManager(getContext());
-                llm.setOrientation(LinearLayoutManager.VERTICAL);
-                rvFecha.setLayoutManager(llm);
-                fechaAdapter = new FechaAdapter(partidos);
-                rvFecha.setAdapter(fechaAdapter);
+            switch(msg.what){
+                case _FECHAS:
+                    txtFecha.setText(fechas.get(fechaEnPantalla - 1).getNombre().toUpperCase());
+                    buscarPartidosFechaBD(fechas.get(fechaEnPantalla - 1).getId());
+                    break;
+                case _PARTIDOS:
+                    determinarEquipoLibreBD();
+                    break;
+                case _EQUIPOS:
+                    txtEquipoLibre.setText("LIBRE: " + nombresEquipos.get(0));
+                    fechaEnPantalla++;
+                    LinearLayoutManager llm = new LinearLayoutManager(getContext());
+                    llm.setOrientation(LinearLayoutManager.VERTICAL);
+                    rvFecha.setLayoutManager(llm);
+                    fechaAdapter = new FechaAdapter(partidos);
+                    rvFecha.setAdapter(fechaAdapter);
+                    break;
+                case ERROR:
+                    AlertDialog alertDialog= new AlertDialog.Builder(getContext()).create();
+                    alertDialog.setTitle("Error de Conexión");
+                    alertDialog.setMessage("Revise su conexión de internet y vuelva a ejecutar");
+                    alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
+                            new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    dialog.dismiss();
+                                }
+                            });
+                    alertDialog.show();
+                    break;
             }
         }
 

@@ -57,8 +57,8 @@ public class MapaFragment extends SupportMapFragment implements OnMapReadyCallba
             if (llamadoDe == 2) {
                 latitud = Double.parseDouble(argumentos.getString("lat"));
                 longitud = Double.parseDouble(argumentos.getString("long"));
-                direccion = String.valueOf(argumentos.getSize("dir"));
-                nombre=String.valueOf(argumentos.getSize("nom"));
+                direccion = String.valueOf(argumentos.getString("dir"));
+                nombre=String.valueOf(argumentos.getString("nom"));
             }
         }
         getMapAsync(this);
