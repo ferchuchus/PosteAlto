@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "849829837532",
+    "firebase_url": "https://tp-postealto-1547300512944.firebaseio.com",
+    "project_id": "tp-postealto-1547300512944",
+    "storage_bucket": "tp-postealto-1547300512944.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:849829837532:android:d6d69b9736be9d5f",
+        "android_client_info": {
+          "package_name": "ar2018.TPFinal.posteAlto"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "849829837532-fgidg01f5b2m95sal11pi16d1lo4rfq3.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCSkEY5obH5aGbbtHqWd28MKRPCwi078wc"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
